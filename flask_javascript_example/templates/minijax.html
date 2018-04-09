@@ -67,15 +67,15 @@ $("#entry").submit( function(event) {
    event.preventDefault();
   });
 
-// On each keystroke, ask the server whether the current 
-// word is long enough. 
+// On each keystroke, ask the server whether the current
+// word is long enough.
 //
 // We use 'keyup' because the form value
 // is updated before that event is generated.
 // keypress is triggered before the input field has been
 // updated.  Be aware that we'll see non-character keys like
 // shift and control, so make sure whatever you do with the
-// event does not depend on it being a letter. 
+// event does not depend on it being a letter.
 //
 $("#attempt").keyup(function(event) {
    var txt = $("#attempt").val();  // Current content of the input field
@@ -90,15 +90,15 @@ $("#attempt").keyup(function(event) {
 
    if (! "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(letter)) { return }
 
-   $.getJSON( "/_countem", { text: txt }, 
-              function(data) {
-                rsval = data.result.long_enough;
+   $.getJSON( "/_countem", { text: txt },  // send a request to "/_countem" with a dict containing some text
+              function(data) {  // a function for handling the response data
+                rsval = data.result.long_enough;  // get an item from the response data
                 console.log("rsval: " + rsval)
-                if (rsval) {
+                if (rsval) {  // If true, edit the html that's on the page
                    $("#response").html("That's enough!");
                    $("#attempt").val("");
                 } else {
-                   $("#response").append(txt.length + " "); 
+                   $("#response").append(txt.length + " ");
                 }
                 showTiles(txt);
                }
@@ -111,7 +111,7 @@ $("#attempt").keyup(function(event) {
 // point values and a consistent naming scheme that allows me to
 // generate a URL for each letter.  Browsers should cache the graphics
 // files so that http requests are sent only the first time each
-// element is encountered. 
+// element is encountered.
 //
 function showTiles(text) {
    text = text.toUpperCase();  // tiles are letter-A.png, etc.
