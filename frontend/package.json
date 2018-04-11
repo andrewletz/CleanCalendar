@@ -1,0 +1,23 @@
+{
+  "name": "clean-calendar",
+  "version": "1.0.0",
+  "description": "422-proj1-s2018",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewletz/CleanCalendar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewletz/CleanCalendar/issues"
+  },
+  "homepage": "https://github.com/andrewletz/CleanCalendar#readme",
+  "devDependencies": {
+    "electron": "^1.8.4"
+  }
+}
