@@ -2,19 +2,19 @@ from datetime import date, time, datetime
 
 
 class Event:
-    def __init__(self, name = None, edate = date(2000, 1, 1), start = time(0, 0), end = time(0, 0), desc = None, loc = None, cat = None, priority = "medium"):  # Using edate as event date to prevent conflict with the imported datetime.date
+    def __init__(self, name = 'None', edate = '1/1/2000', start = '0:0', end = '0:0', desc = 'None', loc = 'None', cat = 'None', priority = "medium"):  # Using edate as event date to prevent conflict with the imported datetime.date
         '''
         input: name is a string; edate is the event date as a datetime.date object; start and end are start and end times as datetime.time objects; desc is description as string; loc is location as string; cat is category as string; priority is string.
         creates and Event object with the specified attributes. 
         '''
-        self.name = None  #TODO make default strings for non date/time attributes
+        self.name = 'None'
         self.edate = date(2000, 1, 1)
         self.start = time(0, 0)
         self.end = time(0, 0)
-        self.desc = None
-        self.loc = None
-        self.cat = None
-        self.priority = None
+        self.desc = 'None'
+        self.loc = 'None'
+        self.cat = 'None'
+        self.priority = 'medium'
 
         self.set_name(name)
         self.set_date(edate)
@@ -32,13 +32,13 @@ class Event:
         return self.name
 
     def get_date(self):
-        return self.edate
+        return self.edate.strftime("%d/%m/%Y")
 
     def get_start(self):
-        return self.start
+        return self.start.strftime("%I:%M%p")
 
     def get_end(self):
-        return self.end
+        return self.end.strftime("%I:%M%p")
 
     def get_desc(self):
         return self.desc
@@ -59,15 +59,28 @@ class Event:
     def set_name(self, name):  #TODO Validate input for each setter. Format: worked, message. True, "worked" if no problems
         self.name = name
 
-    def set_date(self, edate):
+    def set_date(self, date_str):
+        date_list = date_str.split('/')
+        day = int(date_list[0])
+        month = int(date_list[1])
+        year = int(date_list[2])
+        edate = date(year, month, day)
         self.edate = edate
         self.start_datetime = datetime.combine(self.edate, self.start)  # recalculate start_datetime if date or start changes
 
-    def set_start(self, start):
+    def set_start(self, start_str):
+        start_list = start_str.split(':')
+        hour = int(start_list[0])
+        minute = int(start_list[1])
+        start = time(hour, minute)
         self.start = start
         self.start_datetime = datetime.combine(self.edate, self.start)
 
-    def set_end(self, end):
+    def set_end(self, end_str):
+        end_list = end_str.split(':')
+        hour = int(end_list[0])
+        minute = int(end_list[1])
+        end = time(hour, minute)
         self.end = end
 
     def set_desc(self, desc):
