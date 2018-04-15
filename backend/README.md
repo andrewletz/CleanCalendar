@@ -14,7 +14,8 @@ enter `python3 cal_server.py` from a terminal
 
 send an http request to 0.0.0.0:5001/new, /edit, /delete, or /view
 
-each page expects the following args in the request:  
+each page expects the following args in the request:
+
 /new  
  * name - a string
  * date - a string of the form DD/MM/YYYY
@@ -23,14 +24,18 @@ each page expects the following args in the request:
  * desc - description, a string
  * loc - location, a string
  * cat - category, a string
- * priority - a string  
+ * priority - a string
+
 /edit  
  * all the same args as /new. These args should be the values you want the event to have, not the values it already has
- * old name - a string, the old event name to use for lookup  
+ * old name - a string, the old event name to use for lookup
+
 /delete  
- * name - a string  
+ * name - a string
+
 /view  
  * name - the name of the event to view, a string
+
 
 responses:  
  * /new, /edit, and /delete respond with json {"success": "yes"}. This will probably be changed to respond with an appropriate message if there was a failure (invalid input, missing an arg, etc)
