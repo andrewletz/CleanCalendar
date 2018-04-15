@@ -16,7 +16,7 @@ send an http request to 0.0.0.0:5001/new, /edit, /delete, or /view
 
 each page expects the following args in the request:
 
-/new  
+/new
  * name - a string
  * date - a string of the form DD/MM/YYYY
  * start - a string of the form hh:mm
@@ -26,18 +26,18 @@ each page expects the following args in the request:
  * cat - category, a string
  * priority - a string
 
-/edit  
+/edit
  * all the same args as /new. These args should be the values you want the event to have, not the values it already has
  * old name - a string, the old event name to use for lookup
 
-/delete  
+/delete
  * name - a string
 
-/view  
+/view
  * name - the name of the event to view, a string
 
 
-responses:  
+responses:
  * /new, /edit, and /delete respond with json {"success": "yes"}. This will probably be changed to respond with an appropriate message if there was a failure (invalid input, missing an arg, etc)
  * /view responds with a json {"name": name, "date": date, "start": start, "end": end, "desc": desc, "loc": loc, "cat": cat, "priority": priority}
 
