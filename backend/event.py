@@ -7,7 +7,7 @@ class Event:
         input: name is a string; edate is the event date as a datetime.date object; start and end are start and end times as datetime.time objects; desc is description as string; loc is location as string; cat is category as string; priority is string.
         creates and Event object with the specified attributes. 
         '''
-        self.name = None  #TODO make default date and time objects for edate, start, end
+        self.name = None  #TODO make default strings for non date/time attributes
         self.edate = date(2000, 1, 1)
         self.start = time(0, 0)
         self.end = time(0, 0)
