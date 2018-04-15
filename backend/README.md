@@ -44,5 +44,5 @@ responses:
 An example request to create a new event. This example works in a web browser.  
 `http://0.0.0.0:5001/new?name=test&date=01/02/2001&start=5:30&end=6:00&desc=a test&loc=home&cat=home&priority=low`  
 the '?' indicates the start of the http args  
-'&' indicates another arg
+'&' indicates another arg  
 Note that the space in `desc=a test` is allowed.  
