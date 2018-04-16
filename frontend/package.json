@@ -19,5 +19,8 @@
   "homepage": "https://github.com/andrewletz/CleanCalendar#readme",
   "devDependencies": {
     "electron": "^1.8.4"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
   }
 }

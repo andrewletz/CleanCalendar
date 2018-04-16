@@ -5,15 +5,78 @@
   last update: April 11, 2018
 */
 html, body {
-  width: 100%;
-  height: 100%;
   background-color: #F44336;
 }
 
-nav .nav-item1 {
-  position: absolute;
+nav ul li {
+  -webkit-transition: background-color .3s;
+  transition: background-color .3s;
+  font-size: 1rem;
   color: #fff;
-  display: inline-block;
-  font-size: 2.1rem;
-  padding: 0;
+  display: block;
+  padding: 0 15px;
+  cursor: pointer;
+}
+
+nav ul li.btn, nav ul li.btn-large, nav ul li.btn-small, nav ul li.btn-large, nav ul li.btn-flat, nav ul li.btn-floating {
+  margin-top: -2px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+nav ul li.btn > .material-icons, nav ul li.btn-large > .material-icons, nav ul li.btn-small > .material-icons, nav ul li.btn-large > .material-icons, nav ul li.btn-flat > .material-icons, nav ul li.btn-floating > .material-icons {
+  height: inherit;
+  line-height: inherit;
+}
+
+nav ul li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+#view-options-dropdown {
+  min-width: 120px;
+}
+
+#panel-week,
+#panel-month,
+#panel-year {
+  display: none;
+}
+
+#time-table {
+  position: relative;
+  width: 100px;
+  float: left;
+}
+
+#day-table {
+  width: 865px;
+  float: right;
+}
+
+#time-table > thead > tr {
+  height: 60px;
+  border: none !important;
+  border-top: none;
+  border-bottom: none;
+}
+
+#time-table > tbody > tr {
+  height: 60px;
+  border: none !important;
+  border-top: none;
+  border-bottom: none;
+}
+
+#time-table > tbody > tr > td {
+  float: right;
+}
+
+#day-table > tbody > tr {
+  height: 60px;
+  cursor: pointer;
+}
+
+.modal {
+  width: 75% !important;
 }

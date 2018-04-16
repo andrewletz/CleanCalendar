@@ -1,4 +1,4 @@
-<!-- 
+<!--
   author: Keir Armstrong
   contact: karmstr7@uoregon.edu
   date of creation: April 11, 2018
@@ -19,71 +19,274 @@
 </head>
 
 <body>
-  <div class="main">
+  <ul id="view-options" class="dropdown-content">
+    <li id="tab-day" class="active">Today</li>
+    <li id="tab-week">Week</li>
+    <li id="tab-month">Month</li>
+    <li id="tab-year">Year</li>
+  </ul>
+  <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper teal lighten-2">
         <a class="brand-logo">April 2018</a>
         <ul class="right hide-on-med-and-down">
-          <li class="active"><a href="/">Today</a></li>
-          <li><a href="week.html">Week</a></li>
-          <li><a href="month.html">Month</a></li>
-          <li><a href="year.html">Year</a></li>
+          <li id="previous">
+            <i class="material-icons">arrow_back</i>
+          </li>
+          <li id="next">
+            <i class="material-icons">arrow_forward</i>
+          </li>
+          <li id="view-options-dropdown" class="dropdown-trigger" data-target="view-options">
+            Today
+            <i class="material-icons right">arrow_drop_down</i>
+          </li>
         </ul>
       </div>
     </nav>
-    <table class="centered highlight">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Mon 9</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>8am</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>9am</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>10am</td>
-          <td>Art 101</td>
-        </tr>
-        <tr>
-          <td>11am</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>12pm</td>
-          <td>Physics 101</td>
-        </tr>
-        <tr>
-          <td>1pm</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>2pm</td>
-          <td>History 101</td>
-        </tr>
-        <tr>
-          <td>3pm</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>4pm</td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 
+  <div class="main">
+    <div id="panel-day" class="panel">
+      <table id="time-table">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1am</td>
+          </tr>
+          <tr>
+            <td>2am</td>
+          </tr>
+          <tr>
+            <td>3am</td>
+          </tr>
+          <tr>
+            <td>4am</td>
+          </tr>
+          <tr>
+            <td>5am</td>
+          </tr>
+          <tr>
+            <td>6am</td>
+          </tr>
+          <tr>
+            <td>7am</td>
+          </tr>
+          <tr>
+            <td>8am</td>
+          </tr>
+          <tr>
+            <td>9am</td>
+          </tr>
+          <tr>
+            <td>10am</td>
+          </tr>
+          <tr>
+            <td>11am</td>
+          </tr>
+          <tr>
+            <td>12pm</td>
+          </tr>
+          <tr>
+            <td>1pm</td>
+          </tr>
+          <tr>
+            <td>2pm</td>
+          </tr>
+          <tr>
+            <td>3pm</td>
+          </tr>
+          <tr>
+            <td>4pm</td>
+          </tr>
+          <tr>
+            <td>5pm</td>
+          </tr>
+          <tr>
+            <td>6pm</td>
+          </tr>
+          <tr>
+            <td>7pm</td>
+          </tr>
+          <tr>
+            <td>8pm</td>
+          </tr>
+          <tr>
+            <td>9pm</td>
+          </tr>
+          <tr>
+            <td>10pm</td>
+          </tr>
+          <tr>
+            <td>11pm</td>
+          </tr>
+          <tr>
+            <td>12am</td>
+          </tr>
+        </tbody>
+      </table>
+      <table id="day-table" class="centered highlight">
+        <thead>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="hidden" value="1"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="2"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="3"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="4"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="5"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="6"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="7"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="8"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="9"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="10"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="11"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="12"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="13"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="14"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="15"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="16"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="17"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="18"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="19"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="20"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="21"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="22"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="23"/></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" value="24"/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="panel-week" class="panel">
+      <p>Weeks!</p>
+    </div>
+
+    <div id="panel-month" class="panel">
+      <p>Months!</p>
+    </div>
+
+    <div id="panel-year" class="panel">
+      <p>Year!</p>
+    </div>
+    <!-- Modal Structure -->
+    <div id="event-modal" class="modal">
+      <div class="modal-content">
+        <div class="row">
+          <form id="event-form" class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="event-name"
+                        name="event-name"
+                        type="text"
+                        class="validate"
+                        value="Untitled Event">
+                <label class="active" for="event-name">Event Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="event-start-date"
+                        name="event-start-date"
+                        class="datepicker"
+                        type="text"
+                        class="validate">
+                <label class="active" for="event-start-date">Start Date</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="event-start-time"
+                        name="event-start-time"
+                        class="timepicker"
+                        type="text"
+                        class="validate">
+                <label class="active" for="event-start-time">Start Time</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="event-end-date"
+                        name="event-end-date"
+                        class="datepicker"
+                        type="text"
+                        class="validate">
+                <label class="active" for="event-end-date">End Date</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="event-end-time"
+                        name="event-end-time"
+                        class="timepicker"
+                        type="text"
+                        class="validate">
+                <label class="active" for="event-end-time">End Time</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" id="event-create" class="modal-action modal-close waves-effect waves-green btn-flat">Create</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <script>window.$ = window.jQuery = require('jquery');</script>
   <!-- Import Materialize JS -->
-  <script src="../style-js/materialize.min.js"></script>
+  <script type="text/javascript" src="../style-js/materialize.js"></script>
   <!-- Import useful Javascript -->
-  <script src="../renderer/index.js"></script>
+  <script type="text/javascript" src="../renderer/index.js"></script>
 </body>
 
 </html>
