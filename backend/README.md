@@ -18,13 +18,14 @@ each page expects the following args in the request:
 
 /new
  * name - a string
- * date - a string of the form DD/MM/YYYY
- * start - a string of the form hh:mm
- * end - a string of the form hh:mm
- * desc - description, a string
- * loc - location, a string
- * cat - category, a string
- * priority - a string
+ * start date - a string of the form DD/MM/YYYY
+ * end date - a string of the form DD/MM/YYYY
+ * start time - a string of the form hh:mm
+ * end time - a string of the form hh:mm
+ * ~~desc - description, a string~~
+ * ~~loc - location, a string~~
+ * ~~cat - category, a string~~
+ * ~~priority - a string~~
 
 /edit
  * all the same args as /new. These args should be the values you want the event to have, not the values it already has
@@ -39,10 +40,10 @@ each page expects the following args in the request:
 
 responses:
  * /new, /edit, and /delete respond with json {"success": "yes"}. This will probably be changed to respond with an appropriate message if there was a failure (invalid input, missing an arg, etc)
- * /view responds with a json {"name": name, "date": date, "start": start, "end": end, "desc": desc, "loc": loc, "cat": cat, "priority": priority}
+ * /view responds with a json {"name": name, "start date": start\_date, "end date": end\_date, "start time": start\_time, "end time": end\_time ~~, "desc": desc, "loc": loc, "cat": cat, "priority": priority~~}
 
 An example request to create a new event. This example works in a web browser.  
-`http://0.0.0.0:5001/new?name=test&date=01/02/2001&start=5:30&end=6:00&desc=a test&loc=home&cat=home&priority=low`  
+`http://0.0.0.0:5001/new?name=test&start date=01/02/2001&end date=02/02/2001&start time=5:30&end time=6:00`  
 the '?' indicates the start of the http args  
 '&' indicates another arg  
-Note that the space in `desc=a test` is allowed.  
+Note that the spaces are allowed.  
