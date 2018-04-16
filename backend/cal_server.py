@@ -85,7 +85,7 @@ def view_event():
     #cat = event.get_cat()
     #priority = event.get_priority()
 
-    event_dict = {"name": name, "start date": start_date, "end date": end_date, "start time": start_time, "end time": end_time)  #, "desc": desc, "loc": loc, "cat": cat, "priority": priority}
+    event_dict = {"name": name, "start date": start_date, "end date": end_date, "start time": start_time, "end time": end_time}  #, "desc": desc, "loc": loc, "cat": cat, "priority": priority}
     return jsonify(event_dict)
 
 

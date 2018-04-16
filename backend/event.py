@@ -2,7 +2,7 @@ from datetime import date, time, datetime
 
 
 class Event:
-    def __init__(self, name = 'None', start_date = '1/1/2000', end_date = '1/1/2000' start_time = '0:0', end_time = '0:0', desc = 'None', loc = 'None', cat = 'None', priority = "medium"):  # Using edate as event date to prevent conflict with the imported datetime.date
+    def __init__(self, name = 'None', start_date = '1/1/2000', end_date = '1/1/2000', start_time = '0:0', end_time = '0:0', desc = 'None', loc = 'None', cat = 'None', priority = "medium"):  # Using edate as event date to prevent conflict with the imported datetime.date
         '''
         input: name is a string; edate is the event date as a datetime.date object; start and end are start and end times as datetime.time objects; desc is description as string; loc is location as string; cat is category as string; priority is string.
         creates and Event object with the specified attributes. 
@@ -22,12 +22,12 @@ class Event:
         self.set_end_date(end_date)
         self.set_start_time(start_time)
         self.set_end_time(end_time)
-        self.set_desc(desc)
-        self.set_loc(loc)
-        self.set_cat(cat)
-        self.set_priority(priority)
+        #self.set_desc(desc)
+        #self.set_loc(loc)
+        #self.set_cat(cat)
+        #self.set_priority(priority)
 
-        self.start_datetime = datetime.combine(self.edate, self.start)  # For sorting events based on when they start
+        self.start_datetime = datetime.combine(self.start_date, self.start_time)  # For sorting events based on when they start
 
 
     def get_name(self):
@@ -73,7 +73,7 @@ class Event:
         self.start_date = start_date
         self.start_datetime = datetime.combine(self.start_date, self.start_time)  # recalculate start_datetime if date or start changes
 
-    def set_start_date(self, date_str):
+    def set_end_date(self, date_str):
         date_list = date_str.split('/')
         day = int(date_list[0])
         month = int(date_list[1])
@@ -81,20 +81,20 @@ class Event:
         end_date = date(year, month, day)
         self.end_date = end_date
 
-    def set_start(self, start_str):
+    def set_start_time(self, start_str):
         start_list = start_str.split(':')
         hour = int(start_list[0])
         minute = int(start_list[1])
-        start = time(hour, minute)
-        self.start = start
-        self.start_datetime = datetime.combine(self.edate, self.start)
+        start_time = time(hour, minute)
+        self.start_time = start_time
+        self.start_datetime = datetime.combine(self.start_date, self.start_time)
 
-    def set_end(self, end_str):
+    def set_end_time(self, end_str):
         end_list = end_str.split(':')
         hour = int(end_list[0])
         minute = int(end_list[1])
-        end = time(hour, minute)
-        self.end = end
+        end_time = time(hour, minute)
+        self.end = end_time
 
     def set_desc(self, desc):
         self.desc = desc
@@ -110,7 +110,7 @@ class Event:
 
 
     def __repr__(self):
-        return "Name: {}, Start date: {}, End date: {}, Start time: {}, End time: {}, Description: {}, Location: {}, Category: {}, Priority: {}".format(self.name, self.start_date.strftime("%d/%m/%Y"), self.end_date.strftime("%d/%m/%Y"), self.start_time.strftime("%I:%M%p"), self.end_time.strftime("%I:%M%p"))  #, self.desc, self.loc, self.cat, self.priority)
+        return "Name: {}, Start date: {}, End date: {}, Start time: {}, End time: {}, Description: , Location: , Category: , Priority: ".format(self.name, self.start_date.strftime("%d/%m/%Y"), self.end_date.strftime("%d/%m/%Y"), self.start_time.strftime("%I:%M%p"), self.end_time.strftime("%I:%M%p"))  #, self.desc, self.loc, self.cat, self.priority)
 
 
     # Below are the methods for sorting and comparing Event objects
