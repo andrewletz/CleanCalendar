@@ -1,6 +1,7 @@
 .gitignore
 venv/
 frontend/node_modules/
+.idea/
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
