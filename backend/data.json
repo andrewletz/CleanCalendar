@@ -1,0 +1,13 @@
+{
+  "events": [
+    {
+      "id": "1234321",
+      "name": "School",
+      "start-date": "Apr 20, 2018",
+      "end-date": "Apr 20, 2018",
+      "start-time": "8:00",
+      "end-time": "12:00",
+      "color": "lime lighten-4"
+    }
+  ]
+}
