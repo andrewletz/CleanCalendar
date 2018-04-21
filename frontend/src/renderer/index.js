@@ -1,237 +1,294 @@
-/*
-  author: Keir Armstrong
-  contact: karmstr7@uoregon.edu
-  date of creation: April 11, 2018
-  last update: April 11, 2018
-*/
+const UUID = require('uuid/v1');
+const COLOR_OPTIONS = {"#ffcdd2": "red lighten-4",
+                        "#f8bbd0": "pink lighten-4",
+                        "#e1bee7": "purple lighten-4",
+                        "#d1c4e9": "deep-purple lighten-4",
+                        "#c5cae9": "indigo lighten-4",
+                        "#bbdefb": "blue lighten-4",
+                        "#f0f4c3": "lime lighten-4"}
+const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const MONTHS_AS_STRINGS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-/* --Instantiate all required objects--*/
-let date = new Date();
 $('#event-modal').modal();
+$('.dropdown-trigger').dropdown();
 $('.datepicker').datepicker({
   showClearBtn: true,
 });
 $('.timepicker').timepicker({
   twelveHour: false,
-  autoClose: true,
   showClearBtn: true,
 });
-$('.dropdown-trigger').dropdown();
-/* ----------------------------------- */
 
-
-/* ----------Global constants--------- */
-const DAYS_AS_STRINGS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const MONTHS_AS_STRINGS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-/* ----------------------------------- */
-
-
-/* ----------Global variables--------- */
-let currentDay = 0;
-let days = [];
-/* ----------------------------------- */
-
-
-/* ----------Global dictionaries------ */
-let daySchedule = {
-  "1": null,
-  "2": null,
-  "3": null,
-  "4": null,
-  "5": null,
-  "6": null,
-  "7": null,
-  "8": null,
-  "9": null,
-  "10": null,
-  "11": null,
-  "12": null,
-  "13": null,
-  "14": null,
-  "15": null,
-  "16": null,
-  "17": null,
-  "18": null,
-  "19": null,
-  "20": null,
-  "21": null,
-  "22": null,
-  "23": null,
-  "24": null,
-}
-/* ----------------------------------- */
-
-
-/* -----------Helper functions-------- */
-let dayToString= (num) => {
-  return DAYS_AS_STRINGS[num];
-}
-/* ----------------------------------- */
-
-
-/* ---------Pre-load events/states---- */
-
-/* ----------------------------------- */
-
-
-/* --------Post-load events----------- */
-$(document).ready(function(){
-  // display day of week and day of month in day panel
-  $('#day-table>thead>tr').append("<th>" +
-                                  dayToString(date.getDay()) + " " +
-                                  date.getDate().toString() + "</th>");
-
-  // clickable event area
-  $('#day-table>tbody>tr').click(
-    function() {
-      $(this).children('td').addClass('red lighten-4')
-      // open modal
-      $('#event-modal').modal('open');
-      // attach a default value (today's date) to #event-start-date
-      let startAndEndDate = MONTHS_AS_STRINGS[date.getMonth()] + " " + date.getDate().toString() + ", " + date.getFullYear().toString();
-      let startHour = parseInt($(this).children('td').children('input').val());
-      let endHour = startHour + 1;
-      let startTime = startHour.toString() + ":" + "00";
-      let endTime = endHour.toString() + ":" + "00";
-
-      $('#event-start-date').val(startAndEndDate);
-      $('#event-end-date').val(startAndEndDate);
-      $('#event-start-time').val(startTime);
-      $('#event-end-time').val(endTime);
-
-      M.updateTextFields();
-    }
-  );
-
-  $('#tab-day').click(
-    function() {
-      $('#tab-day').addClass('active');
-      $('#tab-week').removeClass('active');
-      $('#tab-month').removeClass('active');
-      $('#tab-year').removeClass('active');
-
-      $('#panel-week').hide();
-      $('#panel-month').hide();
-      $('#panel-year').hide();
-      $('#panel-day').show();
-
-      document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Today";
-    }
-  );
-
-  $('#tab-week').click(
-    function() {
-      $('#tab-day').removeClass('active');
-      $('#tab-week').addClass('active');
-      $('#tab-month').removeClass('active');
-      $('#tab-year').removeClass('active');
-
-      $('#panel-day').hide();
-      $('#panel-month').hide();
-      $('#panel-year').hide();
-      $('#panel-week').show();
-
-      document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Week";
-    }
-  );
-
-  $('#tab-month').click(
-    function() {
-      $('#tab-day').removeClass('active');
-      $('#tab-week').removeClass('active');
-      $('#tab-month').addClass('active');
-      $('#tab-year').removeClass('active');
-
-      $('#panel-day').hide();
-      $('#panel-week').hide();
-      $('#panel-year').hide();
-      $('#panel-month').show();
-
-      document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Month";
-    }
-  );
-
-  $('#tab-year').click(
-    function() {
-      $('#tab-day').removeClass('active');
-      $('#tab-week').removeClass('active');
-      $('#tab-month').removeClass('active');
-      $('#tab-year').addClass('active');
-
-      $('#panel-day').hide();
-      $('#panel-week').hide();
-      $('#panel-month').hide();
-      $('#panel-year').show();
-
-      document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Year";
-    }
-  );
-
-  $('#event-create').click(
-    function(e) {
-      e.preventDefault();
-      console.log('hello');
-      $('#event-form').trigger('submit');
-    }
-  );
-
-  $('#event-form').submit(
-    function(e) {
-      e.preventDefault();
-      let $inputs = $('#event-form :input');
-      let vals = {};
-      $inputs.each(function() {
-        vals[this.name] = $(this).val();
-      });
-      let startTime = "";
-      let i = 0;
-      while (vals['event-start-time'].charAt(i) != ":") {
-        startTime = startTime + vals['event-start-time'].charAt(i);
-        i++;
-      };
-      let endTime = "";
-      i = 0;
-      while (vals['event-end-time'].charAt(i) != ":") {
-        endTime = endTime + vals['event-end-time'].charAt(i);
-        i++;
-      };
-      let hoursLength = parseInt(endTime) - parseInt(startTime);
-      for (i = 0; i < hoursLength; i++) {
-        days[currentDay][startTime] = vals;
-        startTime = (parseInt(startTime) + 1).toString();
-      };
-      console.log(days[currentDay]);
-    }
-  );
-
-  const createDay = () => {
-    let day = Object.assign(daySchedule);
-    days.push(day);
+const getColor = (colorName=null) => {  // get random color or the named color
+  if (colorName === null) {
+    let colorKeys = Object.keys(COLOR_OPTIONS);
+    let objLength = colorKeys.length;
+    let randNum = Math.floor(Math.random()*objLength);
+    let chosenKey = colorKeys[randNum];
+    return COLOR_OPTIONS[chosenKey];
   }
-  createDay();
+  else {
+    return COLOR_OPTIONS[colorName];
+  }
+}
 
-  const displayDay = () => {
-    let thisDaySchedule = days[currentDay];
-    let i = 0;
-    $('#day-table tr').each(function() {
-      $.each(this.cells, function() {
-        if (i != 0) {
-          let iToString = i.toString();
-          if (thisDaySchedule[iToString]) {
-            $(this).text(thisDaySchedule[iToString]['description']);
-          }
-          else {
-            $(this).text("");
+const formatMonth = (date) => {
+  return MONTHS_AS_STRINGS[date.getMonth()];
+}
+
+const formataWeekday = (date) => {
+  return DAYS_OF_WEEK[date.getDate];
+}
+
+const formatFull = (date) => {
+  return MONTHS_AS_STRINGS[date.getMonth()] + " " + date.getDate().toString() + ", " + date.getFullYear().toString();
+}
+
+const BASE_URL = 'http://127.0.0.1:5000/calendar/api/events';
+const ID_URL = '/id';
+const CREATE_URL = '/create';
+
+const getAllEvents = async () => {
+  const response = await fetch(BASE_URL, {
+    method: "get"
+  });
+  const data = await response.json();
+  return data['events'];
+}
+
+const getEventsByDate = async (date) => {
+  const response = await fetch(BASE_URL + "/" + date, {
+    method: "get"
+  });
+  const data = await response.json();
+  return data['events'];
+}
+
+const postEvent = async (payload) => {
+  const response = await fetch(BASE_URL + CREATE_URL, {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+  const data = await response.json();
+  return data['event'];
+}
+
+const updateEvent = async (id, payload) => {
+  const response = await fetch(BASE_URL + "/" + id, {
+    method: "put",
+    headers: {
+      'ACCEPT': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+  const data = await response.json();
+  return data['event'];
+}
+
+const deleteEvent = async (id) => {
+  const response = await fetch(BASE_URL + "/" + id, {
+    method: "delete",
+  });
+  const data = await response.json();
+  return data['result'];
+}
+
+class ViewManager {
+  constructor() {
+    this.date = new Date();
+    this.days = [];
+    this.currentlyShown = [];
+    this.daysSize = 0;
+    this.showingAmount = 1;
+    this.init();
+  }
+
+  init() {
+    getAllEvents()
+    .then(data => {
+      let daysWithEvents = {};
+      let i = 0, len = data.length;
+      for (; i < len; i++) {
+        if (!(data[i]['start-date'] in daysWithEvents)) {
+          daysWithEvents[data[i]['start-date']] = true;
+          let d = new Day(data[i]['start-date']);
+          d.fill(data[i]);
+          this.days.push(d);
+          this.daysSize++;
+        }
+        else {
+          let j = 0, len2 = this.days.length;
+          for (; j < len2; j++) {
+            if (this.days[j].getDate() === data[i]['start-date']) {
+              this.days[j].fill(data[i]);
+            }
           }
         }
-        i++;
-      });
-    });
+      }
+      let formattedDate = formatFull(this.date);
+      this.currentlyShown.push(formattedDate);
+      console.log(this.currentlyShown);
+    })
+    .catch((err) => {
+      console.log("error happened");
+    })
   }
 
-  const editDayEvent = (hour, props) => {
-    days[currentDay][hour] = props;
-    displayDay();
+  showPrevious() {
+    this.date.setDate(this.date.getDate() - 1);
+    let formattedDate = formatFull(this.date);
+    let i = 0, len = this.daysSize;
+    for (; i < len; i++) {
+      if (this.days[i].getDate() == formattedDate) {
+        this.currentlyShown.pop().push(formattedDate);
+        return this.days[i];
+      }
+    }
+    this.currentlyShown.pop().push(formattedDate);
+    return null;
   }
+
+  showNext() {
+    this.date.setDate(this.date.getDate() + 1);
+    let formattedDate = formatFull(this.date);
+    let i = 0, len = this.daysSize;
+    for (; i < len; i++) {
+      if (this.days[i].getDate() == formattedDate) {
+        this.currentlyShown.pop().push(formattedDate);
+        return this.days[i];
+      }
+    }
+    this.currentlyShown.pop().push(formattedDate);
+    return null;
+  }
+
+  removeEvent(eventId) {
+    let formattedDate = formatFull(this.date);
+    let i = 0, len = this.daysSize;
+    for (; i < len; i++) {
+      if (this.days[i].getDate() === formattedDate) {
+        this.days[i].delete(eventId);
+        if (this.days[i].getSize() == 0) {
+          this.days[i].splice(i, 1);
+          this.daysSize--;
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  updateEvent(eventId, data) {
+    let formattedDate = formatFull(this.date);
+    let i = 0, len = this.daysSize;
+    for (i; i < len; i++) {
+      if (this.days[i].getDate() === formattedDate) {
+        this.days[i].update(eventId, data);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  addEvent(data) {
+    let formattedDate = formatFull(this.date);
+    let i = 0, len = this.daysSize;
+    for (i; i < len; i++) {
+      if (this.days[i].getDate() === formattedDate) {
+        this.days[i].add(data);
+        this.daysSize++;
+        return true;
+      }
+    }
+    this.days.push(new Day(data['start-date']));
+    this.days[-1].add(data);
+    this.daysSize++;
+    return false;
+  }
+
+  getDaysSize() {
+    return this.daysSize;
+  }
+
+  getShowingAmount() {
+    return this.showingAmount;
+  }
+
+  getCurrentDay() {
+    return this.currentlyShown[0];
+  }
+
+  getAllDays() {
+    return this.days;
+  }
+}
+
+class Day {
+  constructor(date) {
+    this.date = date;
+    this.size = 0;
+    this.events = [];
+  }
+
+  add(eventObj) {
+    this.events.push(eventObj);
+    this.size++;
+    postEvent(eventObj);
+  }
+
+  delete(eventId) {
+    let i = 0, len = this.size;
+    for (; i < len; i++) {
+      if (this.events[i]['id'] === eventId) {
+        this.events.splice(i, 1);
+      }
+    }
+    deleteEvent(eventId);
+  }
+
+  update(eventId, data) {
+    let i = 0, len = this.size;
+    for (; i < len; i++) {
+      if (this.events[i]['id'] === eventId) {
+        this.events[i]['name'] = data['name'];
+        this.events[i]['start-date'] = data['start-date'];
+        this.events[i]['end-date'] = data['end-date'];
+        this.events[i]['start-time'] = data['start-time'];
+        this.events[i]['end-time'] = data['end-time'];
+        this.events[i]['color'] = data['color'];
+      }
+    }
+    updateEvent(eventId, data);
+  }
+
+  fill(eventObj) {
+    this.events.push(eventObj);
+    this.size++;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
+  getDate() {
+    return this.date;
+  }
+
+  getEvents() {
+    return this.events;
+  }
+}
+
+
+let view = new ViewManager();
+console.log(view.getAllDays());
+console.log(view.showPrevious());
+console.log(view.getCurrentDay());
+
+$(document).ready(function() {
 });
-/* ----------------------------------- */
