@@ -5,6 +5,7 @@
 
 from flask import Flask, jsonify, abort, make_response, request
 import json
+from backup import backup_csv
 
 app = Flask(__name__)
 
@@ -27,6 +28,11 @@ def not_found(error):
 @app.errorhandler(400)
 def format_error(error):
     return make_response(jsonify({'error': 'Not valid JSON format'}, 400))
+
+
+@app.errorhandler(500)
+def server_error(error):
+    return make_response(jsonify({'error': 'Server-side error, probably issue with backup'}, 500))
 
 
 @app.route('/calendar/api/events', methods=['GET'])
@@ -108,6 +114,18 @@ def update_datafile():
         formatted_events = {'events': events}
         json.dump(formatted_events, f)
     print(events)
+
+
+@app.route('/calendar/backup', methods=['GET'])
+def backup_calendar():
+    if not events:  # if events list is empty
+        abort(400)
+
+    try:
+        status, message = backup_csv(events)
+        return jsonify({'status': status, 'message': message})
+    except:
+        abort(500)
 
 
 if __name__ == "__main__":
