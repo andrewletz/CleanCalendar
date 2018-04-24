@@ -1,15 +1,11 @@
 # author(s): Kyle Nielsen
 # contact: kylen@uoregon.edu
 # date of creation: April 20, 2018
-# last update: April 22, 2018 #TODO
+# last update: April 24, 2018 #TODO
 # credit: #TODO give credit, if any
 
 #TODO update README
 
-#TODO use tabs instead of commas
-
-# /calendar/backup methods=['GET'] in server
-# return with success or appropriate error message
 
 from datetime import date
 
