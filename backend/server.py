@@ -119,7 +119,7 @@ def update_datafile():
 @app.route('/calendar/backup', methods=['GET'])
 def backup_calendar():
     if not events:  # if events list is empty
-        abort(400)
+        abort(404)
 
     try:
         status, message = backup_csv(events)
