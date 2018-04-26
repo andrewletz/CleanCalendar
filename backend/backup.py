@@ -1,14 +1,11 @@
 # author(s): Kyle Nielsen
 # contact: kylen@uoregon.edu
 # date of creation: April 20, 2018
-# last update: April 24, 2018 #TODO
-# credit: #TODO give credit, if any
+# last update: April 26, 2018
 
-#TODO update README
-
+#TODO comments/description
 
 from datetime import date
-
 
 
 def backup_csv(events):
@@ -17,7 +14,7 @@ def backup_csv(events):
         expects a list of dicts with keys 'start-date', 'start-time', 'end-date', 'end-time', 'name', 'color', and 'id'
         returns a status code and a message
             0 signifies success (no errors)
-            1 signifies invalid inout
+            1 signifies invalid input
             2 signifies something when wrong with creating or writing to the file
     '''
 
