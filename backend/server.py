@@ -91,6 +91,7 @@ def create_event():
     '''
     adds a new event to the database
     expects a json request containing a valid event
+    returns a json object with the new event with the key 'event'
     status 400 if the request is not json
     '''
     print("CREATING EVENT")
@@ -115,6 +116,7 @@ def update_event(event_id):
     '''
     changes the data for an existing event based of id
     expects a json request containing a valid event
+    returns a json oject of the event with the key 'event'
     status 404 if the event to be updated doesn't exist, 400 if the request isn't json
     '''
     print("UPDATING EVENT")
@@ -166,6 +168,7 @@ def backup_calendar():
     '''
     calls a function to write the events to a csv file for backup
     details in backup.py
+    responds with status 404 if there are no events, 500 if something else goes wrong
     '''
     if not events:  # if events list is empty
         abort(404)

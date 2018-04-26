@@ -15,7 +15,7 @@ def backup_csv(events):
         returns a status code and a message
             0 signifies success (no errors)
             1 signifies invalid input
-            2 signifies something when wrong with creating or writing to the file
+            2 signifies something went wrong with creating or writing to the file
     '''
 
     if type(events) is not list:
@@ -26,7 +26,7 @@ def backup_csv(events):
         if type(event) is not dict:
             return 1, 'expected only dicts in the list'
 
-        if not (event['start-date'] and event['start-time'] and event['end-time'] and event['name'] and event['end-time'] and event['id']):
+        if not (event['start-date'] and event['start-time'] and event['end-time'] and event['name'] and event['end-date'] and event['id'] and event['color']):
             return 1, "one or more events missing one or more expected keys ('start-date', 'start-time', 'end-date', 'end-time', 'name', color, 'id')"
 
         start_date = event['start-date']
