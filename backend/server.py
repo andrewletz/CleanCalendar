@@ -1,7 +1,7 @@
 # author(s): Kyle Nielsen, Keir Armstrong
 # contact: kylen@uoregon.edu, karmstr7@uoregon.edu
 # date of creation: April 11, 2018
-# last update: April 26, 2018
+# last update: April 29, 2018
 
 
 #TODO comments and/or descriptiion, check comments for input < 144
