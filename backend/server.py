@@ -101,6 +101,7 @@ def create_event():
     event = {  # Get all event attributes from the request json
         'id': request.json['id'],
         'name': request.json['name'],
+        'description': request.json['description'],
         'start-date': request.json['start-date'],
         'end-date': request.json['end-date'],
         'start-time': request.json['start-time'],
@@ -128,13 +129,14 @@ def update_event(event_id):
         abort(400)
 
     # Replace the old data in the event with the new data
-    event[0]['id'] = request.json.get('name', event[0]['id'])
+    event[0]['id'] = request.json.get('id', event[0]['id'])
     event[0]['name'] = request.json.get('name', event[0]['name'])
     event[0]['start-date'] = request.json.get('start-date', event[0]['start-date'])
     event[0]['end-date'] = request.json.get('end-date', event[0]['end-date'])
     event[0]['start-time'] = request.json.get('start-time', event[0]['start-time'])
-    event[0]['end-time'] = request.json.get('start-time', event[0]['start-time'])
+    event[0]['end-time'] = request.json.get('end-time', event[0]['end-time'])
     event[0]['color'] = request.json.get('color', event[0]['color'])
+    event[0]['description'] = request.json.get('description', event[0]['description'])
     update_datafile()  # Update database file
     return jsonify({'event': event[0]})
 

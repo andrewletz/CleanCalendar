@@ -2,8 +2,13 @@
   author: Keir Armstrong
   contact: karmstr7@uoregon.edu
   date of creation: April 11, 2018
-  last update: April 29, 2018
+  last update: April 21, 2018
 */
+
+// TODO: Default input values =====> URGENT
+// TODO: Forget entries in previously visited days =====> URGENT
+// TODO: Error reporting to the user =====> MODERATELY URGENT
+// TODO: Text alignment, time-table needs better vertical alignment =====> MODERATELY URGENT
 
 /* --------- Global constants -------- */
 const COLOR_OPTIONS = {"#ffcdd2": "red lighten-4",
@@ -19,23 +24,22 @@ const VIEW_MODES = ["day", "week"];
 /* ----------------------------------- */
 
 /* --- Instantiate required objects ---*/
-const UUID = require('uuid/v1');        // unique id generator
-$('#event-modal').modal({               // Materialize modal component
+const UUID = require('uuid/v1');
+$('#event-modal').modal({
   dismissible: false
 });
-$('.dropdown-trigger').dropdown();      // Materialize dropdown component
-$('.datepicker').datepicker({           // Materialize datepicker component
+$('.dropdown-trigger').dropdown();
+$('.datepicker').datepicker({
   showClearBtn: true,
 });
-$('.timepicker').timepicker({           // Materialize timepicker component
+$('.timepicker').timepicker({
   twelveHour: false,
   showClearBtn: true,
 });
-$('.tooltipped').tooltip();             // Materialize tooltip component
 /* ----------------------------------- */
 
 /* ---------- Helper functions ------- */
-const getColor = (colorName=null) => {  // get a random color or the named color
+const getColor = (colorName=null) => {  // get random color or the named color
   if (colorName === null) {
     let colorKeys = Object.keys(COLOR_OPTIONS);
     let objLength = colorKeys.length;
@@ -48,19 +52,19 @@ const getColor = (colorName=null) => {  // get a random color or the named color
   }
 }
 
-const formatMonth = (date) => {               // converts digit to lettered represenation of month
+const formatMonth = (date) => {
   return MONTHS_AS_STRINGS[date.getMonth()];
 }
 
-const formataWeekday = (date) => {            // converts digit to lettered represenation of week
+const formataWeekday = (date) => {
   return DAYS_OF_WEEK[date.getDay()];
 }
 
-const formatFull = (date) => {                // converts all date objects to a readable format
+const formatFull = (date) => {
   return MONTHS_AS_STRINGS[date.getMonth()] + " " + date.getDate().toString() + ", " + date.getFullYear().toString();
 }
 
-const validateInputs = () => {                // call to validate form inputs
+const validateInputs = () => {
   let valid = true;
   let $inputs = $('#event-form :input');
   $inputs.each(function() {
@@ -121,29 +125,27 @@ const validateInputs = () => {                // call to validate form inputs
 /* ----------------------------------- */
 
 /* ------- API Request Actions ------- */
-const BASE_URL = 'http://127.0.0.1:5000';
-const API_EVENTS = '/calendar/api/events';
-const ID_URL = '/calendar/api/events/id';
-const CREATE_URL = '/calendar/api/events/create';
-const BACKUP_URL = '/calendar/backup';
-                                          // async await lets the appliction run without freezing up while waiting for server response.
-const getAllEvents = async () => {        // call this to fetch all events in the database
-  const response = await fetch(BASE_URL+API_EVENTS, {
+const BASE_URL = 'http://127.0.0.1:5000/calendar/api/events';
+const ID_URL = '/id';
+const CREATE_URL = '/create';
+
+const getAllEvents = async () => {
+  const response = await fetch(BASE_URL, {
     method: "get"
   });
   const data = await response.json();
   return data['events'];
 }
 
-const getEventsByDate = async (date) => { // call this to fetch all events of the specified date in the database
-  const response = await fetch(BASE_URL+API_EVENTS+"/" + date, {
+const getEventsByDate = async (date) => {
+  const response = await fetch(BASE_URL + "/" + date, {
     method: "get"
   });
   const data = await response.json();
   return data['events'];
 }
 
-const postEvent = async (payload) => {  // call this to create an event in the database
+const postEvent = async (payload) => {
   const response = await fetch(BASE_URL + CREATE_URL, {
     method: "post",
     headers: {
@@ -156,8 +158,8 @@ const postEvent = async (payload) => {  // call this to create an event in the d
   return data['event'];
 }
 
-const updateEvent = async (id, payload) => {  // call this to update the selected event in the database
-  const response = await fetch(BASE_URL+API_EVENTS+"/" + id, {
+const updateEvent = async (id, payload) => {
+  const response = await fetch(BASE_URL + "/" + id, {
     method: "put",
     headers: {
       'Accept': 'application/json',
@@ -169,19 +171,12 @@ const updateEvent = async (id, payload) => {  // call this to update the selecte
   return data['event'];
 }
 
-const deleteEvent = async (id) => { // call this to delete event of the specified id in the database
-  const response = await fetch(BASE_URL+API_EVENTS+"/" + id, {
+const deleteEvent = async (id) => {
+  const response = await fetch(BASE_URL + "/" + id, {
     method: "delete",
   });
   const data = await response.json();
   return data['result'];
-}
-
-const createBackup = () => {  // creates a backup csv file
-  fetch(BASE_URL + BACKUP_URL)
-  .then(function(response) {
-    console.log(response);
-  });
 }
 /* ----------------------------------- */
 
@@ -199,19 +194,32 @@ class ViewManager {
     this.createWeekViewTable();
   }
 
-  _init() {                         // it's probably fine to just get all the events with a small app, not ideal when scaled.
+  _init() {
     getAllEvents()
     .then(data => {
       this.events = data;
       this.renderDayViewEvents();
       this.renderWeekViewEvents();
+      this._findLastSunday();
     })
     .catch(err => {
-      alert("Network error, couldn't establish connection to server. Try again"); // actually needs a hard restart of the program.
+      alert("Network error, couldn't establish connection to server. Try again");
     });
   }
 
-  createDayViewTable() {           // generate tables using javascript, because who wants to type it out?
+  _findLastSunday() {
+    let copy = this.currentWeek;
+    let i = 0, len = 7;
+    for (; i < len; i++) {
+      if (copy.getDay() === 0) {
+        console.log('found sunday', copy);
+        break;
+      }
+      copy.setDate(copy.getDate() - 1);
+    }
+  }
+
+  createDayViewTable() {
     let monthYear = formatMonth(this.currentDay) + " " + this.currentDay.getFullYear().toString();
     $('#month-year').html(monthYear);
     let monthDateYear = formatMonth(this.currentDay) + " " + this.currentDay.getDate().toString() + ", " + this.currentDay.getFullYear().toString();
@@ -242,10 +250,19 @@ class ViewManager {
   createWeekViewTable() {
     let monthYear = formatMonth(this.currentWeek) + " " + this.currentWeek.getFullYear().toString();
     $('#month-year').html(monthYear);
-    let copiedDate = new Date(this.currentWeek);
+    let copy = this.currentWeek;
+    if (copy.getDay() != 0) {
+      for (let i = 0; i < 7; i++) {
+        copy.setDate(copy.getDate() - 1);
+        if (copy.getDay() === 0) {
+          this.currentWeek = copy;
+          break;
+        }
+      }
+    }
     for (let i = 0; i < 7; i++) {
-      let weekDate = formataWeekday(copiedDate) + " " + copiedDate.getDate().toString();
-      let monthDateYear = formatMonth(copiedDate) + " " + copiedDate.getDate().toString() + ", " + copiedDate.getFullYear().toString();
+      let weekDate = formataWeekday(copy) + " " + copy.getDate().toString();
+      let monthDateYear = formatMonth(copy) + " " + copy.getDate().toString() + ", " + copy.getFullYear().toString();
       let table = document.getElementById('week-table-' + i.toString());
       let thead = document.createElement('thead');
       let tbody = document.createElement('tbody');
@@ -268,17 +285,15 @@ class ViewManager {
       }
       table.appendChild(tbody);
       $('#week-table-' + i.toString()).prop('value', monthDateYear);
-      copiedDate.setDate(copiedDate.getDate() + 1);
+      copy.setDate(copy.getDate() + 1);
     }
   }
 
-  renderDayViewEvents() {   // call this after the tables have been generated, this attaches events to the approriate table cells.
+  renderDayViewEvents() {
     // clear table
     $('#day-table > tbody > tr').each(function() {
       $(this).removeClass('red pink purple deep-purple indigo blue lime lighten-4');
-      $(this).removeClass('has-event');
       $(this).children().first().html('');
-      $(this).val('');
     });
 
     let monthDateYear = formatMonth(this.currentDay) + " " + this.currentDay.getDate().toString() + ", " + this.currentDay.getFullYear().toString();
@@ -299,8 +314,6 @@ class ViewManager {
     $('#day-table > tbody > tr').each(function(i) {
       if (continueEvent != null) {
         $(this).addClass(continueEvent['color']);
-        $(this).addClass('has-event');
-        $(this).val(continueEvent['id']);
         continueEvent['time-delta']--;
         if (continueEvent['time-delta'] === 0) {
           continueEvent = null;
@@ -312,8 +325,6 @@ class ViewManager {
         $(this).children().first().append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
         $(this).children().first().append(continueEvent['start-time'] + "-" + continueEvent['end-time']);
         $(this).addClass(continueEvent['color']);
-        $(this).addClass('has-event');
-        $(this).val(continueEvent['id']);
         continueEvent['time-delta']--;
         if (continueEvent['time-delta'] === 0) {
           continueEvent = null;
@@ -322,22 +333,21 @@ class ViewManager {
     });
   }
 
-  renderWeekViewEvents() {  // same as renderDayViewEvents()
+  renderWeekViewEvents() {
     // clear tables
     for (let i = 0; i < 7; i++) {
       let tableName = '#week-table-' + i.toString() + '>tbody>tr';
       $(tableName).each(function() {
         $(this).removeClass('red pink purple deep-purple indigo blue lime lighten-4');
-        $(this).removeClass('has-event');
         $(this).children().first().html('');
-        $(this).val('');
       });
     }
 
-    let copiedDate = new Date(this.currentWeek);
+    let copyWeek = this.currentWeek;
+    copyWeek.setDate(copyWeek.getDate() - 7);
     for (let i = 0; i < 7; i++) {
       let tableName = '#week-table-' + i.toString() + '>tbody>tr';
-      let monthDateYear = formatMonth(copiedDate) + " " + copiedDate.getDate().toString() + ", " + copiedDate.getFullYear().toString();
+      let monthDateYear = formatMonth(copyWeek) + " " + copyWeek.getDate().toString() + ", " + copyWeek.getFullYear().toString();
       let todaysEvents = {};
       let j = 0, len = this.events.length;
       for (; j < len; j++) {
@@ -354,8 +364,6 @@ class ViewManager {
       $(tableName).each(function(k) {
         if (continueEvent != null) {
           $(this).addClass(continueEvent['color']);
-          $(this).addClass('has-event');
-          $(this).val(continueEvent['id']);
           continueEvent['time-delta']--;
           if (continueEvent['time-delta'] === 0) {
             continueEvent = null;
@@ -365,18 +373,16 @@ class ViewManager {
           continueEvent = todaysEvents[k];
           $(this).children().first().html(continueEvent['name']);
           $(this).addClass(continueEvent['color']);
-          $(this).addClass('has-event');
-          $(this).val(continueEvent['id']);
           continueEvent['time-delta']--;
           if (continueEvent['time-delta'] === 0) {
             continueEvent = null;
           }
         }
       });
-      copiedDate.setDate(copiedDate.getDate() + 1);
+      copyWeek.setDate(copyWeek.getDate() + 1);
     }
   }
-  showPrevious() {  // triggers when user clicks the prevous button, handles both day view and week view
+  showPrevious() {
     if (this.currentViewMode === "day") {
       this.currentDay.setDate(this.currentDay.getDate() - 1);
       this.renderDayViewEvents();
@@ -388,22 +394,21 @@ class ViewManager {
       $('#day-table').prop('value', monthDateYear);
     }
     else {
-      this.currentWeek.setDate(this.currentWeek.getDate() - 7);
+      this.currentWeek.setDate(this.currentWeek.getDate() - 14);
       this.renderWeekViewEvents();
       let monthYear = formatMonth(this.currentWeek) + " " + this.currentWeek.getFullYear().toString();
       $('#month-year').html(monthYear);
-      let copiedDate = new Date(this.currentWeek);
       for (let i = 0; i < 7; i++) {
-        let weekDate = formataWeekday(copiedDate) + " " + copiedDate.getDate().toString();
-        let monthDateYear = formatMonth(copiedDate) + " " + copiedDate.getDate().toString() + ", " + copiedDate.getFullYear().toString();
+        let weekDate = formataWeekday(this.currentWeek) + " " + this.currentWeek.getDate().toString();
+        let monthDateYear = formatMonth(this.currentWeek) + " " + this.currentWeek.getDate().toString() + ", " + this.currentWeek.getFullYear().toString();
         $('#week-table-' + i.toString() + ' thead tr th').html(weekDate);
         $('#week-table-' + i.toString()).prop('value', monthDateYear);
-        copiedDate.setDate(copiedDate.getDate() + 1);
+        this.currentWeek.setDate(this.currentWeek.getDate() + 1);
       }
     }
   }
 
-  showNext() {  // triggers when user clicks the next button, handles both day view and week view
+  showNext() {
     if (this.currentViewMode === "day") {
       this.currentDay.setDate(this.currentDay.getDate() + 1);
       this.renderDayViewEvents();
@@ -419,108 +424,53 @@ class ViewManager {
       this.renderWeekViewEvents();
       let monthYear = formatMonth(this.currentWeek) + " " + this.currentWeek.getFullYear().toString();
       $('#month-year').html(monthYear);
-      let copiedDate = new Date(this.currentWeek);
       for (let i = 0; i < 7; i++) {
-        let weekDate = formataWeekday(copiedDate) + " " + copiedDate.getDate().toString();
-        let monthDateYear = formatMonth(copiedDate) + " " + copiedDate.getDate().toString() + ", " + copiedDate.getFullYear().toString();
+        let weekDate = formataWeekday(this.currentWeek) + " " + this.currentWeek.getDate().toString();
+        let monthDateYear = formatMonth(this.currentWeek) + " " + this.currentWeek.getDate().toString() + ", " + this.currentWeek.getFullYear().toString();
         $('#week-table-' + i.toString() + ' thead tr th').html(weekDate);
         $('#week-table-' + i.toString()).prop('value', monthDateYear);
-        copiedDate.setDate(copiedDate.getDate() + 1);
+        this.currentWeek.setDate(this.currentWeek.getDate() + 1);
       }
     }
   }
 
-  findEventById(id) {   // returns the event with matching id
-    let i = 0, len = this.events.length;
-    for (; i < len; i++) {
-      if (this.events[i]['id'] === id) {
-        return this.events[i];
-      }
-    }
-  }
-
-  createNewEvent(data) {  // want to call the Request functions in the class to make use the class's methods
-    postEvent(data)
-    .then(data => {
-      this.renderDayViewEvents();
-      this.renderWeekViewEvents();
-      location.reload();
-    })
-    .catch(err => {
-      alert("Network error, couldn't establish connection to server. Try again");
-    });
-  }
-
-  removeEvent(id) { // want to call the Request functions in the class to make use the class's methods
-    deleteEvent(id)
-    .then(data => {
-      this.renderDayViewEvents();
-      this.renderWeekViewEvents();
-      location.reload();
-    })
-    .catch(err => {
-      alert("Network error, couldn't establish connection to server. Try again");
-    });
-  }
-
-  updateEvent(id, data) { // want to call the Request functions in the class to make use the class's methods
-    updateEvent(id, data)
-    .then(data => {
-      this.renderDayViewEvents();
-      this.renderWeekViewEvents();
-      location.reload();
-    })
-    .catch(err => {
-      alert("Network error, couldn't establish connection to server. Try again");
-    });
-  }
-
-  changeViewMode(newView) { // switch between day/week views
+  changeViewMode(newView) {
     this.currentViewMode = newView;
   }
 
-  getCurrentDay() { // getter method
+  getCurrentDay() {
     return this.currentDay;
   }
 
-  getCurrentWeek() {  // getter method
-    return this.currentWeek;
-  }
-  getCurrentView() {  // getter method
+  getCurrentView() {
     return this.currentViewMode;
   }
 }
+
 let view = new ViewManager();
 /* ----------------------------------- */
 
 /* ------ Starting the Program ------- */
 $(document).ready(function() {
-  let openedEventId = null;   // for tracking the event currently being edited
-
+  // let openedEvent = null;   // for tracking the event currently being edited
+  //
   // Enable event menu to pop
   $('table>tbody>tr').click(
     function() {
-      if ($(this).hasClass('has-event')) {  // if an event is in this cell, prepopulate the form with existing data.
-        openedEventId = $(this).val();
-        let eventData = view.findEventById($(this).val());
-        $('#event-name').val(eventData['name']);
-        $('#event-description').val(eventData['description']);
-        $('#event-start-date').val(eventData['start-date']);
-        $('#event-end-date').val(eventData['end-date']);
-        $('#event-start-time').val(eventData['start-time']);
-        $('#event-end-time').val(eventData['end-time']);
-        M.updateTextFields();
+      if ($(this).children().hasClass('has-event')) {
+        openedEvent = $(this).children();
         $('#event-create').hide();
         $('#event-delete').show();
         $('#event-save').show();
       }
-      else {                                // if no existing event, prepopulate with default data.
-        openedEventId = null;
+      else {
+        openedEvent = null;
         let d = $(this).parent().parent().val();
         $('#event-start-date').val(d);
         $('#event-end-date').val(d);
         M.updateTextFields();
         validateInputs();
+
         $('#event-delete').hide();
         $('#event-save').hide();
         $('#event-create').show();
@@ -530,34 +480,25 @@ $(document).ready(function() {
   );
 
   // Enable event menu actions
-  $('#event-delete').click(             // delete button
-    function() {
-      if (openedEventId != null) {
-        view.removeEvent(openedEventId);
-        resetEventForm();
-        $('#event-modal').modal('close');
-      }
-    }
-  );
-
-  $('#event-save').click(               // save/update button
-    function() {
-      if (validateInputs()) {
-        let $inputs = $('#event-form :input');
-        let vals = {};
-        $inputs.each(function() {
-          vals[this.name] = $(this).val();
-        });
-        delete vals[''];
-        vals['id'] = openedEventId;
-        console.log(vals);
-        view.updateEvent(openedEventId, vals);
-        resetEventForm();
-        $('#event-modal').modal('close');
-      }
-    }
-  );
-
+  // $('#event-delete').click(
+  //   function() {
+  //     console.log(openedEvent.val());
+  //     eManager.deleteEvent(openedEvent.val());
+  //   }
+  // );
+  //
+  // $('#event-save').click(
+  //   function() {
+  //     let $inputs = $('#event-form :input');
+  //     let vals = {};
+  //     $inputs.each(function() {
+  //       vals[this.name] = $(this).val();
+  //     });
+  //     delete vals[""];
+  //     eManager.updateEvent(openedEvent.val(), vals);
+  //   }
+  // );
+  //
 
   $('#event-cancel').click(
     function() {
@@ -583,17 +524,10 @@ $(document).ready(function() {
         delete vals[''];
         vals['color'] = getColor();
         vals['id'] = UUID();
-        view.createNewEvent(vals);
+        console.log(vals);
         resetEventForm();
         $('#event-modal').modal('close');
       }
-    }
-  );
-
-  // File backup
-  $('#backup').click(
-    function() {
-      createBackup();
     }
   );
 
@@ -616,8 +550,6 @@ $(document).ready(function() {
   $('#tab-day').click(
     function() {
       view.changeViewMode('day');
-      $('#previous').attr('data-tooltip', 'Previous Day');
-      $('#next').attr('data-tooltip', 'Next Day');
       $('#tab-day').addClass('active');
       $('#tab-week').removeClass('active');
       $('#panel-week').hide();
@@ -630,8 +562,6 @@ $(document).ready(function() {
   $('#tab-week').click(
     function() {
       view.changeViewMode('week');
-      $('#previous').attr('data-tooltip', 'Previous Week');
-      $('#next').attr('data-tooltip', 'Next Week');
       $('#tab-day').removeClass('active');
       $('#tab-week').addClass('active');
       $('#panel-day').hide();
@@ -640,7 +570,6 @@ $(document).ready(function() {
     }
   );
 
-  // small functions to update changes in the form, useful for form validation
   $('#event-end-time').change(function() {
     validateInputs();
   });
@@ -665,7 +594,6 @@ $(document).ready(function() {
     validateInputs();
   });
 
-  // need to forget filled forms once done with em, or if they are cancelled mid-way.
   const resetEventForm = () =>{
     $('#event-name').val('Untitled Event');
     $('#event-description').val('Empty');

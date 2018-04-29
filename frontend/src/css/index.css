@@ -5,7 +5,13 @@
   last update: April 15, 2018
 */
 html, body {
-  background-color: #F44336;
+  background-color: #e0e0e0;
+
+}
+
+.main {
+  margin: auto;
+  width: 95%;
 }
 
 nav ul li {
@@ -33,50 +39,96 @@ nav ul li:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.brand-logo {
+  margin-left: 50px;
+  user-select: none;
+}
+
 #view-options-dropdown {
-  min-width: 120px;
+  width: 70px;
+  font-weight: bold;
+  font-size: 15px;
 }
 
-#panel-week,
-#panel-month,
-#panel-year {
+#panel-week {
   display: none;
-}
-
-#time-table {
-  position: relative;
-  width: 100px;
-  float: left;
-}
-
-#day-table {
-  width: 865px;
-  float: right;
-}
-
-#time-table > thead > tr {
-  height: 60px;
-  border: none !important;
-  border-top: none;
-  border-bottom: none;
-}
-
-#time-table > tbody > tr {
-  height: 60px;
-  border: none !important;
-  border-top: none;
-  border-bottom: none;
-}
-
-#time-table > tbody > tr > td {
-  float: right;
-}
-
-#day-table > tbody > tr {
-  height: 60px;
-  cursor: pointer;
 }
 
 .modal {
   width: 75% !important;
+}
+
+.grid-week {
+  display: grid;
+  grid-template-columns: 120px 120px 120px 120px 120px 120px 120px;
+}
+
+.grid-week-item {
+  text-align: center;
+  border: 0.5px solid #bdbdbd;
+}
+
+
+.grid-week-item > table > tbody > tr {
+  height: 60px;
+}
+
+.grid-week-item >  table > thead > tr > th {
+  text-align: center;
+  font-weight: normal;
+  user-select: none;
+}
+
+.grid-week-item >  table > tbody > tr > td {
+  text-align: center;
+}
+
+.grid-week-item > table > tbody > tr:hover {
+  background-color: #eceff1;
+}
+
+#day-table {
+  width: 860px;
+  margin-left: 55px;
+}
+
+#day-table > thead > tr > th,
+#day-table > tbody > tr > td
+{
+  height: 60px;
+}
+
+#day-table > tbody > tr > td:hover {
+  background-color: #eceff1;
+}
+
+.time-table > thead > tr {
+  height: 60px;
+  border: none !important;
+  border-top: none;
+  border-bottom: none;
+}
+
+.time-table > tbody > tr {
+  height: 60px;
+  border: none !important;
+  border-top: none;
+  border-bottom: none;
+}
+
+.time-table > tbody > tr > td {
+  float: right;
+  position: relative;
+  top: -35px;
+  user-select: none;
+}
+
+.time-table > tbody > tr > td {
+  font-size: 12px;
+}
+
+.time-table {
+  position: relative;
+  width: 50px;
+  float: left;
 }
