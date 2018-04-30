@@ -1,6 +1,6 @@
 /*
-  author: Keir Armstrong
-  contact: karmstr7@uoregon.edu
+  author: Keir Armstrong, Kyle Nielsen
+  contact: karmstr7@uoregon.edu, kylen@uoregon.edu
   date of creation: April 11, 2018
   last update: April 29, 2018
 */
