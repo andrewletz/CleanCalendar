@@ -1,6 +1,13 @@
+/*
+  Attributions
+  https://stackoverflow.com/questions/32885657/how-to-catch-the-event-of-clicking-the-app-windows-close-button-in-electron-app?rq=1
+*/
+
 const {app, BrowserWindow, dialog} = require('electron')
 const path = require('path')
 const url = require('url')
+
+var needsPrompt = true;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -29,13 +36,15 @@ function createWindow () {
   //win.webContents.openDevTools()
   
   win.on('close', function (event) {  // Added by Kyle, credit to user Josh on stack overflow
-	var choice = dialog.showMessageBox({
-		message: "Are you sure you want to quit? You will lose any unsaved changes. (If you clicked 'save' in the event edit window, the event was saved)",
-		buttons: ["Yes", "No"]
-	});
-	if (choice === 1){
-		event.preventDefault();
-	}
+    if (needsPrompt) {
+      var choice = dialog.showMessageBox({
+    message: "Are you sure you want to quit? You will lose any unsaved changes.\n(Click save under any current event window to save)",
+    buttons: ["Yes", "No"]
+  });
+  if (choice === 1){
+    event.preventDefault();
+  }
+    }
   });
 
   // Emitted when the window is closed.
@@ -68,12 +77,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-
-
-/*
-Attributions
-https://stackoverflow.com/questions/32885657/how-to-catch-the-event-of-clicking-the-app-windows-close-button-in-electron-app?rq=1
-*/

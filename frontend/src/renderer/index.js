@@ -1,5 +1,5 @@
 /*
-  author: Keir Armstrong
+  author: Keir Armstrong, Andrew Letz
   contact: karmstr7@uoregon.edu
   date of creation: April 11, 2018
   last update: April 29, 2018
@@ -524,6 +524,7 @@ $(document).ready(function() {
   // Enable event menu to pop
   $('table>tbody>tr').click(
     function() {
+      needsPrompt = true;
       if ($(this).hasClass('has-event')) {  // if an event is in this cell, prepopulate the form with existing data.
         openedEventId = $(this).val();
         let eventData = view.findEventById($(this).val());
@@ -567,6 +568,7 @@ $(document).ready(function() {
         resetEventForm();
         $('#event-modal').modal('close');
       }
+      needsPrompt = false;
     }
   );
 
@@ -585,6 +587,7 @@ $(document).ready(function() {
         resetEventForm();
         $('#event-modal').modal('close');
       }
+      needsPrompt = false;
     }
   );
 
@@ -592,6 +595,7 @@ $(document).ready(function() {
   $('#event-cancel').click(
     function() {
       resetEventForm();
+      needsPrompt = false;
     }
   );
 
@@ -617,6 +621,7 @@ $(document).ready(function() {
         resetEventForm();
         $('#event-modal').modal('close');
       }
+      needsPrompt = false;
     }
   );
 
@@ -652,6 +657,8 @@ $(document).ready(function() {
       $('#tab-week').removeClass('active');
       $('#panel-week').hide();
       $('#panel-day').show();
+      let monthYear = formatMonth(view.currentDay) + " " + view.currentDay.getFullYear().toString();
+      $('#month-year').html(monthYear);
       document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Today";
     }
   );
@@ -666,6 +673,8 @@ $(document).ready(function() {
       $('#tab-week').addClass('active');
       $('#panel-day').hide();
       $('#panel-week').show();
+      let monthYear = formatMonth(view.currentWeek) + " " + view.currentWeek.getFullYear().toString();
+      $('#month-year').html(monthYear);
       document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Week";
     }
   );
