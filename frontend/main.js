@@ -7,9 +7,9 @@ const {app, BrowserWindow, dialog} = require('electron')
 const path = require('path')
 const url = require('url')
 
+// global references between electron and the renderer
 global.storage = {needsPrompt: false};
 
-console.log(global.storage.needsPrompt);
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -21,7 +21,8 @@ function createWindow () {
     height: 600,
     resizable: false,
     fullscreenable: false,
-    maximizable: false
+    maximizable: false,
+    icon: path.join(__dirname, 'src', 'assets', 'icon.png')
   })
 
   // win.setMenu(null)

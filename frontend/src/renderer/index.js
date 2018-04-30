@@ -65,9 +65,36 @@ const formatFull = (date) => {                // converts all date objects to a 
   return MONTHS_AS_STRINGS[date.getMonth()] + " " + date.getDate().toString() + ", " + date.getFullYear().toString();
 }
 
+const gotoDayView = () => {
+  view.changeViewMode('day');
+  $('#previous').attr('data-tooltip', 'Previous Day');
+  $('#next').attr('data-tooltip', 'Next Day');
+  $('#tab-day').addClass('active');
+  $('#tab-week').removeClass('active');
+  $('#panel-week').hide();
+  $('#panel-day').show();
+  let monthYear = formatMonth(view.currentDay) + " " + view.currentDay.getFullYear().toString();
+  $('#month-year').html(monthYear);
+  document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Today";
+}
+
+const gotoWeekView = () => {
+  view.changeViewMode('week');
+  $('#previous').attr('data-tooltip', 'Previous Week');
+  $('#next').attr('data-tooltip', 'Next Week');
+  $('#tab-day').removeClass('active');
+  $('#tab-week').addClass('active');
+  $('#panel-day').hide();
+  $('#panel-week').show();
+  let monthYear = formatMonth(view.currentWeek) + " " + view.currentWeek.getFullYear().toString();
+  $('#month-year').html(monthYear);
+  document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Week";
+}
+
 const validateInputs = () => {                // call to validate form inputs
   let valid = true;
   let $inputs = $('#event-form :input');
+  let tempStartHour = null, tempStartMin = null;
   $inputs.each(function() {
     if (this.name === 'name') {
       if (2 <= $(this).val().length  && $(this).val().length <= 25) {
@@ -103,6 +130,8 @@ const validateInputs = () => {                // call to validate form inputs
     }
     if (this.name === 'start-time') {
       if ($(this).val().length === 5) {
+        tempStartHour = parseInt($(this).val().split(":")[0]);
+        tempStartMin = parseInt($(this).val().split(":")[1]);
         $(this).removeClass('invalid')
       } else {
         valid = false;
@@ -110,7 +139,13 @@ const validateInputs = () => {                // call to validate form inputs
       }
     }
     if (this.name === 'end-time') {
-      if ($(this).val().length === 5) {
+      let endHour = parseInt($(this).val().split(":")[0]);
+      let endMin = parseInt($(this).val().split(":")[1]);
+      let validEndTime = false;
+      if ((endHour > tempStartHour) || (endHour === tempStartHour && endMin > tempStartMin)) {
+        validEndTime = true;
+      }
+      if ($(this).val().length === 5 && validEndTime) {
         $(this).removeClass('invalid')
       } else {
         valid = false;
@@ -351,7 +386,7 @@ class ViewManager {
     });
   }
 
-  renderWeekViewEvents() {  // same as renderDayViewEvents()
+  renderWeekViewEvents() {  // render events for 7 days at a time
     // clear tables
     for (let i = 0; i < 7; i++) {
       let tableName = '#week-table-' + i.toString() + '>tbody>tr';
@@ -362,7 +397,6 @@ class ViewManager {
         $(this).val('');
       });
     }
-
     let copiedDate = new Date(this.currentWeek);
     for (let i = 0; i < 7; i++) {
       let tableName = '#week-table-' + i.toString() + '>tbody>tr';
@@ -373,15 +407,16 @@ class ViewManager {
         if (this.events[j]['start-date'] === monthDateYear) {
           let startTime = parseInt(this.events[j]['start-time'].split(":")[0]),
               endTime = parseInt(this.events[j]['end-time'].split(":")[0]);
-		  let endMinute = parseInt(this.events[j]['end-time'].split(":")[1]);  // Kyle
-          let timeDelta = endTime - startTime;
-		  if (endMinute > 0) {  // Kyle
-			timeDelta = timeDelta + 1;
-		  }
+    		  let endMinute = parseInt(this.events[j]['end-time'].split(":")[1]);  // Kyle
+              let timeDelta = endTime - startTime;
+    		  if (endMinute > 0) {  // Kyle
+    			timeDelta = timeDelta + 1;
+    		  }
           todaysEvents[startTime] = this.events[j];
           todaysEvents[startTime]['time-delta'] = timeDelta;
         }
       }
+      copiedDate.setDate(copiedDate.getDate() + 1);
       if (Object.keys(todaysEvents).length === 0) {continue};
       let continueEvent = null;
       $(tableName).each(function(k) {
@@ -406,7 +441,6 @@ class ViewManager {
           }
         }
       });
-      copiedDate.setDate(copiedDate.getDate() + 1);
     }
   }
   showPrevious() {  // triggers when user clicks the prevous button, handles both day view and week view
@@ -475,9 +509,9 @@ class ViewManager {
   createNewEvent(data) {  // want to call the Request functions in the class to make use the class's methods
     postEvent(data)
     .then(data => {
+      this.events.push(data);
       this.renderDayViewEvents();
       this.renderWeekViewEvents();
-      location.reload();
     })
     .catch(err => {
       alert("Network error, couldn't establish connection to server. Try again");
@@ -487,9 +521,15 @@ class ViewManager {
   removeEvent(id) { // want to call the Request functions in the class to make use the class's methods
     deleteEvent(id)
     .then(data => {
+      let i = 0, len = this.events.length;
+      for (; i < len; i++) {
+        if (this.events[i]['id'] === id) {
+          this.events.splice(i, 1);
+          break;
+        }
+      }
       this.renderDayViewEvents();
       this.renderWeekViewEvents();
-      location.reload();
     })
     .catch(err => {
       alert("Network error, couldn't establish connection to server. Try again");
@@ -499,9 +539,9 @@ class ViewManager {
   updateEvent(id, data) { // want to call the Request functions in the class to make use the class's methods
     updateEvent(id, data)
     .then(data => {
+      this.events.push(data);
       this.renderDayViewEvents();
       this.renderWeekViewEvents();
-      location.reload();
     })
     .catch(err => {
       alert("Network error, couldn't establish connection to server. Try again");
@@ -591,7 +631,6 @@ $(document).ready(function() {
         });
         delete vals[''];
         vals['id'] = openedEventId;
-        console.log(vals);
         view.updateEvent(openedEventId, vals);
         resetEventForm();
         $('#event-modal').modal('close');
@@ -659,32 +698,14 @@ $(document).ready(function() {
   // Hide current view, show day view.
   $('#tab-day').click(
     function() {
-      view.changeViewMode('day');
-      $('#previous').attr('data-tooltip', 'Previous Day');
-      $('#next').attr('data-tooltip', 'Next Day');
-      $('#tab-day').addClass('active');
-      $('#tab-week').removeClass('active');
-      $('#panel-week').hide();
-      $('#panel-day').show();
-      let monthYear = formatMonth(view.currentDay) + " " + view.currentDay.getFullYear().toString();
-      $('#month-year').html(monthYear);
-      document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Today";
+      gotoDayView();
     }
   );
 
   // Hide current view, show week view.
   $('#tab-week').click(
     function() {
-      view.changeViewMode('week');
-      $('#previous').attr('data-tooltip', 'Previous Week');
-      $('#next').attr('data-tooltip', 'Next Week');
-      $('#tab-day').removeClass('active');
-      $('#tab-week').addClass('active');
-      $('#panel-day').hide();
-      $('#panel-week').show();
-      let monthYear = formatMonth(view.currentWeek) + " " + view.currentWeek.getFullYear().toString();
-      $('#month-year').html(monthYear);
-      document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Week";
+      gotoWeekView();
     }
   );
 
