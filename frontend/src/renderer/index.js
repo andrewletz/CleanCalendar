@@ -312,7 +312,11 @@ class ViewManager {
       if (this.events[i]['start-date'] === monthDateYear) {
         let startTime = parseInt(this.events[i]['start-time'].split(":")[0]),
             endTime = parseInt(this.events[i]['end-time'].split(":")[0]);
+		let endMinute = parseInt(this.events[i]['end-time'].split(":")[1]);  // Kyle
         let timeDelta = endTime - startTime;
+		if (endMinute > 0) {  // Kyle
+			timeDelta = timeDelta + 1;
+		}
         todaysEvents[startTime] = this.events[i];
         todaysEvents[startTime]['time-delta'] = timeDelta;
       }
@@ -368,7 +372,11 @@ class ViewManager {
         if (this.events[j]['start-date'] === monthDateYear) {
           let startTime = parseInt(this.events[j]['start-time'].split(":")[0]),
               endTime = parseInt(this.events[j]['end-time'].split(":")[0]);
+		  let endMinute = parseInt(this.events[j]['end-time'].split(":")[1]);  // Kyle
           let timeDelta = endTime - startTime;
+		  if (endMinute > 0) {  // Kyle
+			timeDelta = timeDelta + 1;
+		  }
           todaysEvents[startTime] = this.events[j];
           todaysEvents[startTime]['time-delta'] = timeDelta;
         }
