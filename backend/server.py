@@ -4,7 +4,6 @@
 # last update: April 29, 2018
 
 
-#TODO comments and/or descriptiion, check comments for input < 144
 #TODO return error if data.json file doesn't exist (or create a new file) (test that this is necessary)
 #TODO disable debug mode in the final product
 
@@ -25,7 +24,7 @@ with open('data.json', 'r') as data_file:  # Open the database file for reading
 
 events = data_loaded['events']  # Create a list of events from the data in the file
 
-# a valid event is a dict of the form {'id':value, 'name': value, 'start-date': value, 'end-date': value, 'start-time': value, 'end-time': value, 'color': value}  #TODO update when comment/description are added
+# a valid event is a dict of the form {'id':value, 'name': value, 'description': value, 'start-date': value, 'end-date': value, 'start-time': value, 'end-time': value, 'color': value}  #TODO update when comment/description are added
 #   all values should be strings
 #   dates should be strings of the form 'DD/MM/YYYY'
 #   times should be strings of the form 'hh:mm'
@@ -186,7 +185,7 @@ def backup_calendar():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
 ###############################################################
 # ATTRIBUTIONS

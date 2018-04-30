@@ -11,7 +11,7 @@ from datetime import date
 def backup_csv(events):
     '''
         saves events to a file called 'backup-<year>-<month>-<day>.csv' where the date is the date of creation
-        expects a list of dicts with keys 'start-date', 'start-time', 'end-date', 'end-time', 'name', 'color', and 'id'
+        expects a list of dicts with keys 'start-date', 'start-time', 'end-date', 'end-time', 'name', 'description', 'color', and 'id'
         returns a status code and a message
             0 signifies success (no errors)
             1 signifies invalid input
@@ -21,7 +21,7 @@ def backup_csv(events):
     if type(events) is not list:  # Check that event is a list
         return 1, 'expected a list'
 
-    output = 'start date\tstart time\tend time\tname\tend date\tid\tcolor\r\n'  # The header column
+    output = 'start date\tstart time\tend time\tname\tdescription\tid\tcolor\r\n'  # The header column
 
     for event in events:  # Check that all elements of events are dicts
         if type(event) is not dict:
@@ -35,11 +35,12 @@ def backup_csv(events):
         start_time = event['start-time']
         end_time = event['end-time']
         name = event['name']
+        description = event['description']
         end_date = event['end-date']
         event_id = event['id']
         color = event['color']
 
-        output = '{}{}\t{}\t{}\t{}\t{}\t{}\t{}\r\n'.format(output, start_date, start_time, end_time, name, end_date, event_id, color)  # Generate the string to be written to the file
+        output = '{}{}\t{}\t{}\t{}\t{}\t{}\t{}\r\n'.format(output, start_date, start_time, end_time, name, description, event_id, color)  # Generate the string to be written to the file
 
     filename = 'backup-{}.csv'.format(date.today().isoformat())  # Generate the filename from today's date
     try:  # Attempt to write the file
