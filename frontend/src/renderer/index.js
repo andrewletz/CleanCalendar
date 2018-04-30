@@ -34,6 +34,10 @@ $('.timepicker').timepicker({           // Materialize timepicker component
 $('.tooltipped').tooltip();             // Materialize tooltip component
 /* ----------------------------------- */
 
+/* --- Default scroll ---*/
+//$('.main').scrollTop($('.panel.time-table.days-tbody.default-scroll').position().top);
+/* ----------------------------------- */
+
 /* ---------- Helper functions ------- */
 const getColor = (colorName=null) => {  // get a random color or the named color
   if (colorName === null) {
@@ -81,7 +85,7 @@ const validateInputs = () => {                // call to validate form inputs
       }
     }
     if (this.name === 'start-date') {
-      if ($(this).val().length === 12) {
+      if ($(this).val().length >= 11) {
         $(this).removeClass('invalid')
       } else {
         valid = false;
@@ -89,7 +93,7 @@ const validateInputs = () => {                // call to validate form inputs
       }
     }
     if (this.name === 'end-date') {
-      if ($(this).val().length === 12) {
+      if ($(this).val().length >= 11) {
         $(this).removeClass('invalid')
       } else {
         valid = false;
@@ -231,6 +235,16 @@ class ViewManager {
       else {
         let tr = document.createElement('tr'),
             td = document.createElement('td');
+        if (i < 10) { // sets up the IDs for prepopulating fields later
+          if (i == 0) {
+            var newId = '0:00';
+          } else {
+            var newId = '0' + (i - 1) + ':00';
+          }
+        } else {
+          var newId = (i - 1) + ':00';
+        }
+        tr.id = newId;
         tr.appendChild(td);
         tbody.appendChild(tr);
       }
@@ -262,6 +276,16 @@ class ViewManager {
         else {
           let tr = document.createElement('tr');
           let td = document.createElement('td');
+          if (j < 10) { // sets up the IDs for prepopulating fields later
+            if (j == 0) {
+              var newId = '0:00';
+            } else {
+              var newId = '0' + (j - 1) + ':00';
+            }
+          } else {
+            var newId = (j - 1) + ':00';
+          }
+          tr.id = newId;
           tr.appendChild(td);
           tbody.appendChild(tr);
         }
@@ -519,6 +543,8 @@ $(document).ready(function() {
         let d = $(this).parent().parent().val();
         $('#event-start-date').val(d);
         $('#event-end-date').val(d);
+        $('#event-start-time').val(this.id);
+        $('#event-end-time').val($(this).closest('tr').next().attr("id"));
         M.updateTextFields();
         validateInputs();
         $('#event-delete').hide();

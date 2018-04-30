@@ -1,8 +1,8 @@
 <!--
-  author: Keir Armstrong
+  author: Keir Armstrong, Andrew Letz
   contact: karmstr7@uoregon.edu
   date of creation: April 11, 2018
-  last update: April 15, 2018
+  last update: April 29, 2018
 //-->
 <!DOCTYPE html>
 <html>
@@ -72,7 +72,7 @@
           <tr>
             <td>5am</td>
           </tr>
-          <tr>
+          <tr id="default-scroll">
             <td>6am</td>
           </tr>
           <tr>
@@ -279,8 +279,21 @@
                         class="validate"
                         type="text"
                         required>
-                <label class="active" for="event-start-date">Start Date</label>
+                <label class="active" for="event-start-date">Date</label>
               </div>
+              <!-- End date is hidden for now due to time constraints -->
+              <div hidden class="input-field col s6"> 
+                <input id="event-end-date"
+                        name="end-date"
+                        class="datepicker"
+                        type="text"
+                        required=""
+                        aria-required="true"
+                        class="validate">
+                <label hidden class="active" for="event-end-date">End Date</label>
+              </div>
+            </div>
+            <div class="row">
               <div class="input-field col s6">
                 <input id="event-start-time"
                         name="start-time"
@@ -292,18 +305,7 @@
                         value="00:00">
                 <label class="active" for="event-start-time">Start Time</label>
               </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="event-end-date"
-                        name="end-date"
-                        class="datepicker"
-                        type="text"
-                        required=""
-                        aria-required="true"
-                        class="validate">
-                <label class="active" for="event-end-date">End Date</label>
-              </div>
+              
               <div class="input-field col s6">
                 <input id="event-end-time"
                         name="end-time"
