@@ -19,6 +19,7 @@ const VIEW_MODES = ["day", "week"];
 /* ----------------------------------- */
 
 /* --- Instantiate required objects ---*/
+const remote = require('electron').remote;
 const UUID = require('uuid/v1');        // unique id generator
 $('#event-modal').modal({               // Materialize modal component
   dismissible: false
@@ -532,7 +533,7 @@ $(document).ready(function() {
   // Enable event menu to pop
   $('table>tbody>tr').click(
     function() {
-      needsPrompt = true;
+      remote.getGlobal('storage').needsPrompt = true;
       if ($(this).hasClass('has-event')) {  // if an event is in this cell, prepopulate the form with existing data.
         openedEventId = $(this).val();
         let eventData = view.findEventById($(this).val());
@@ -576,7 +577,7 @@ $(document).ready(function() {
         resetEventForm();
         $('#event-modal').modal('close');
       }
-      needsPrompt = false;
+      remote.getGlobal('storage').needsPrompt = false;
     }
   );
 
@@ -595,7 +596,7 @@ $(document).ready(function() {
         resetEventForm();
         $('#event-modal').modal('close');
       }
-      needsPrompt = false;
+      remote.getGlobal('storage').needsPrompt = false;
     }
   );
 
@@ -603,7 +604,7 @@ $(document).ready(function() {
   $('#event-cancel').click(
     function() {
       resetEventForm();
-      needsPrompt = false;
+      remote.getGlobal('storage').needsPrompt = false;
     }
   );
 
@@ -629,7 +630,7 @@ $(document).ready(function() {
         resetEventForm();
         $('#event-modal').modal('close');
       }
-      needsPrompt = false;
+      remote.getGlobal('storage').needsPrompt = false;
     }
   );
 

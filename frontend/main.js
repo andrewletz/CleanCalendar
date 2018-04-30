@@ -7,8 +7,9 @@ const {app, BrowserWindow, dialog} = require('electron')
 const path = require('path')
 const url = require('url')
 
-var needsPrompt = true;
+global.storage = {needsPrompt: false};
 
+console.log(global.storage.needsPrompt);
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -34,9 +35,9 @@ function createWindow () {
 
   // Open the DevTools.
   //win.webContents.openDevTools()
-  
+
   win.on('close', function (event) {  // Added by Kyle, credit to user Josh on stack overflow
-    if (needsPrompt) {
+    if (global.storage.needsPrompt) {
       var choice = dialog.showMessageBox({
     message: "Are you sure you want to quit? You will lose any unsaved changes.\n(Click save under any current event window to save)",
     buttons: ["Yes", "No"]
