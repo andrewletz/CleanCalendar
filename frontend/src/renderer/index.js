@@ -544,7 +544,11 @@ $(document).ready(function() {
         $('#event-start-date').val(d);
         $('#event-end-date').val(d);
         $('#event-start-time').val(this.id);
-        $('#event-end-time').val($(this).closest('tr').next().attr("id"));
+        if (this.id == '23:00') {
+          $('#event-end-time').val('23:59');
+        } else {
+          $('#event-end-time').val($(this).closest('tr').next().attr("id"));
+        }
         M.updateTextFields();
         validateInputs();
         $('#event-delete').hide();
