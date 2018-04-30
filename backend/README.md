@@ -10,7 +10,7 @@ Run `sudo pip install -r requirements.txt` from a terminal in the backend folder
 
 ### Running
 
-Run `python3 cal_server.py` from a terminal in the backend folder to start the server. The server should now be running. If you are using Clean Calendar, you can stop here.
+Run `python server.py` or `python3 server.py` from a terminal in the backend folder to start the server. The server should now be running. If you are using Clean Calendar, you can stop here.
 
 ### Using the server
 
@@ -30,17 +30,14 @@ The pages for creating and updating events expect a json request with the follow
  * end-date - a string of the form DD/MM/YYYY
  * start-time - a string of the form hh:mm
  * end-time - a string of the form hh:mm
- * ~~desc - description, a string~~
- * ~~loc - location, a string~~
- * ~~cat - category, a string~~
- * ~~priority - a string~~  
+ * description - description, a string
 The pages will respond with status 400 if no json object is provided
 
 The pages for backup and viewing and deleting events only require the URL
 
 
 responses:
- * create and update respond with a json object containing
+ * create and update respond with a json object containing a valid event
  * view responds with a json object containing the event(s) requested. A json object containing a list of events for view all or by date. A json object containing the event for view by id
  * delete responds with a json object indicating success
  * backup responds with a json object containing a status code (not an HTTP status code) and a message
@@ -48,7 +45,7 @@ responses:
 
 ## More Technical
 
-The term 'valid event' for this readme refers to a dictionary/json of the form {'id':value, 'name': value, 'start-date': value, 'end-date': value, 'start-time': value, 'end-time': value, 'color': value}
+The term 'valid event' for this readme refers to a dictionary/json of the form {'id':value, 'name': value, 'description': value, 'start-date': value, 'end-date': value, 'start-time': value, 'end-time': value, 'color': value}
  * all values should be strings
  * dates should be strings of the form 'DD/MM/YYYY'
  * times should be strings of the form 'hh:mm'
@@ -74,4 +71,5 @@ Returns same status, message as above.
 The backup file:  
 * Name: `backup-<yyyy>-<mm>-<dd>.csv` where the date is the date of creation.  
 * The first line contains column headers. Each subsequent line contains the data for a single event.  
-* lines take the form: `<start-date>\t<start-time>\t<end-time>\t<name>\t<end-date>\t<id>\t<color>`
+* lines take the form: `<date>\t<start-time>\t<end-time>\t<name>\t<description>\t<id>\t<color>`
+* "date" is the start date for the event. Because Clean Calendar doesn't use a separate end date, only the start date is stored in the csv backup file.
