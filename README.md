@@ -23,12 +23,40 @@ The software was not tested extensively in other mainstream operating systems, s
 ###### To compile the software from source
           
           1. Build and start the server
-             
-             i.   Clone the 'backend' directory
-             ii.  Install [Python3](https://www.python.org/downloads/) and [Flask](https://pypi.org/project/Flask/1.0.1/) if don't have already.
-             
-             
-          2. Build and start the client
-          3. Start using the client!
-###### Begin using the client!
+             i.   Clone the 'backend' directory and its content
+             ii.  Install Python3 (v3.6.5) if don't have already
+             iii. Install Flask (v1.0.1) and PyInstaller (v3.3.1) 
+             iv.  In the terminal at location 'backend', type
+                    pyinstaller -F server.py
+              v.  The executable can be found in 'backend > dist' named 'server.exe' 
+             vi.  Copy the data.json file from 'backend' to the folder 'server.exe' exists, server will crash without data.json
           
+          2. Build and start the client
+             i.   Clone the 'frontend' directory and its content
+             ii.  Install Node.js (v8.11.1) if don't have already
+             iii. In the terminal at location 'frontend', type
+                    npm install
+                    npm run build-win
+              v.  After build is completed, find CleanCalendar.exe inside 'frontend > release-build > CleanCalendar-win32-ia32 > CleanCalendar.exe'
+          3. Start using the client!
+          
+## Create New Event
+Create a new event by clicking on a time slot and provide the Name, Description, Start Date, Start Time, and End Time of the event. Then click 'Create'.
+
+## Edit Existing Event
+Make changes to an event by clicking on the appropriate time slot and provide the updated Name, Description, Start Date, Start Time, and End Time of the event. Then click 'Save'.
+
+## Delete an Event
+Delete an event you no longer want to commit to by clicking on the appropriate time slot and click 'Delete'.
+
+## Day View Mode
+In day view mode, only one day is shown at any moment. Click 'Day' in the dropdown menu at the top-right of the program to change to day view mode.
+
+## Week View Mode
+In week view mode, seven days are shown at once, always in the format SUN-MON-TUE-WED-THU-FRI-SAT. Click 'Week' in the dropdown menu at the top-right of the program to change to week view mode.
+
+## File Backup
+Want to load all of the events into a CSV format file? We got you covered. In any view mode, click the file download button to generate a CSV file. The file is in 'project1 > server >' or 'CleanCalendar > backend >'.
+
+## Previous and Next Navigation
+To navigate between days and weeks, use these buttons!
