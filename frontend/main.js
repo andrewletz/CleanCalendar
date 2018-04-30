@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, dialog} = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -27,6 +27,16 @@ function createWindow () {
 
   // Open the DevTools.
   win.webContents.openDevTools()
+  
+  win.on('close', function (event) {
+	var choice = dialog.showMessageBox({
+		message: "Are you sure you want to quit? You will lose any unsaved changes. (If you clicked 'save' in the event edit window, the event was saved)",
+		buttons: ["Yes", "No"]
+	});
+	if (choice === 1){
+		event.preventDefault();
+	}
+  });
 
   // Emitted when the window is closed.
   win.on('closed', () => {
