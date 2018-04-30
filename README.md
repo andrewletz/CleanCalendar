@@ -59,4 +59,4 @@ In week view mode, seven days are shown at once, always in the format SUN-MON-TU
 Want to load all of the events into a CSV format file? We got you covered. In any view mode, click the file download button to generate a CSV file. The file is in 'project1 > server >' or 'CleanCalendar > backend >'.
 
 ## Previous and Next Navigation
-To navigate between days and weeks, use these buttons!
+To navigate between days and weeks, use the left/right arrow buttons!
