@@ -26,9 +26,9 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools()
   
-  win.on('close', function (event) {
+  win.on('close', function (event) {  // Added by Kyle, credit to user Josh on stack overflow
 	var choice = dialog.showMessageBox({
 		message: "Are you sure you want to quit? You will lose any unsaved changes. (If you clicked 'save' in the event edit window, the event was saved)",
 		buttons: ["Yes", "No"]
@@ -71,3 +71,9 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+
+/*
+Attributions
+https://stackoverflow.com/questions/32885657/how-to-catch-the-event-of-clicking-the-app-windows-close-button-in-electron-app?rq=1
+*/
