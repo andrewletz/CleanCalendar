@@ -2,10 +2,73 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c88e2195-f4dd-430d-83ca-9ee66d90ea11" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/backup.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/json_parser/parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/json_parser/sample.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/flask_minijax.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-A.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-B.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-C.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-D.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-E.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-F.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-G.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-H.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-I.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-J.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-K.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-L.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-N.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-O.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-P.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-Q.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-R.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-S.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-T.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-U.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-V.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-W.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-X.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-Y.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-Z.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/letter-values.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-A.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-B.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-C.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-D.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-E.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-F.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-G.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-H.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-I.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-J.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-K.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-L.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-N.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-O.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-P.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-Q.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-R.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-S.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-T.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-U.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-V.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-W.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-X.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-Y.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/img/penalty-Z.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/static/jumble.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_javascript_example/templates/minijax.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/renderer/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/renderer/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/view/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/view/index.html" afterDir="false" />
     </list>
@@ -17,7 +80,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/CleanCalendar$server.coverage" NAME="server Coverage Results" MODIFIED="1525007889252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
+    <SUITE FILE_PATH="coverage/CleanCalendar$server.coverage" NAME="server Coverage Results" MODIFIED="1525148102724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -35,20 +98,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="server.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3036">
-              <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="backup-2018-04-29.csv" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/backend/backup-2018-04-29.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="-67">
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
+              <folding>
+                <element signature="e#312#375#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -67,6 +124,7 @@
       <find>movie</find>
       <find>descr</find>
       <find>des</find>
+      <find>28</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -77,8 +135,8 @@
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/backend/cal_server.py" />
-        <option value="$PROJECT_DIR$/backend/server.py" />
         <option value="$PROJECT_DIR$/backend/data.json" />
+        <option value="$PROJECT_DIR$/backend/server.py" />
       </list>
     </option>
   </component>
@@ -96,9 +154,9 @@
       <path value="$PROJECT_DIR$/frontend/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="507" />
-    <option name="width" value="865" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="715" />
+    <option name="width" value="657" />
     <option name="height" value="713" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -109,6 +167,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -125,7 +184,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -187,16 +245,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="715" y="0" width="657" height="713" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32847896" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2840909" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32686085" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25189108" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28347826" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.28246754" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.39865997" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.32919255" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -209,29 +267,29 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32954547" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15279879" />
       <window_info id="Structure" order="1" weight="0.24962178" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.302589" />
-      <window_info anchor="bottom" id="Python Console" order="9" weight="0.32847896" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32686085" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="SciView" order="4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.32847896" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,18 +301,30 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/backend/server.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+          <folding>
+            <element signature="e#312#375#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3080">
+          <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/backup-2018-04-29.csv" />
+    <entry file="file://$PROJECT_DIR$/backend/server.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3080">
           <caret line="140" column="39" lean-forward="true" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/backup-2018-04-29.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/backup-2018-04-29.csv" />
     <entry file="file://$PROJECT_DIR$/backend/server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -477,24 +547,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/event.py" />
     <entry file="file://$PROJECT_DIR$/backend/cal_server.py" />
+    <entry file="file://$PROJECT_DIR$/backend/backup-2018-04-29.csv" />
     <entry file="file://$PROJECT_DIR$/backend/data.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
+        <state relative-caret-position="22">
+          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/backend/backup.py" />
     <entry file="file://$PROJECT_DIR$/backend/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3036">
-          <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/backup-2018-04-29.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="-67">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#312#375#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

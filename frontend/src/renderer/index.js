@@ -13,9 +13,10 @@ const COLOR_OPTIONS = {"#ffcdd2": "red lighten-4",
                         "#c5cae9": "indigo lighten-4",
                         "#bbdefb": "blue lighten-4",
                         "#f0f4c3": "lime lighten-4"}
+// JavaScript’s Date object returns integers 0-6 to represent days of week. This array gets the corresponding lettered representations (Mon, Tue...) of numbered days.
 const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// This array gets the corresponding lettered representations of (Jan, Feb…) numbered months.
 const MONTHS_AS_STRINGS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const VIEW_MODES = ["day", "week"];
 /* ----------------------------------- */
 
 /* --- Instantiate required objects ---*/
@@ -40,63 +41,38 @@ $('.tooltipped').tooltip();             // Materialize tooltip component
 /* ----------------------------------- */
 
 /* ---------- Helper functions ------- */
-const getColor = (colorName=null) => {  // get a random color or the named color
-  if (colorName === null) {
-    let colorKeys = Object.keys(COLOR_OPTIONS);
-    let objLength = colorKeys.length;
-    let randNum = Math.floor(Math.random()*objLength);
-    let chosenKey = colorKeys[randNum];
-    return COLOR_OPTIONS[chosenKey];
-  }
-  else {
-    return COLOR_OPTIONS[colorName];
-  }
+const getColor = () => {  // get a random color or the named color
+  let colorKeys = Object.keys(COLOR_OPTIONS);
+  let objLength = colorKeys.length;
+  let randNum = Math.floor(Math.random()*objLength);
+  let chosenKey = colorKeys[randNum];
+  return COLOR_OPTIONS[chosenKey];
 }
 
+// Get the numbered month from date and return the lettered representation of it
 const formatMonth = (date) => {               // converts digit to lettered represenation of month
   return MONTHS_AS_STRINGS[date.getMonth()];
 }
 
+// Get the numbered day of week from date and return the lettered representation of it
 const formataWeekday = (date) => {            // converts digit to lettered represenation of week
   return DAYS_OF_WEEK[date.getDay()];
 }
 
+// Convert day, month, and year from date into appropriate strings
 const formatFull = (date) => {                // converts all date objects to a readable format
   return MONTHS_AS_STRINGS[date.getMonth()] + " " + date.getDate().toString() + ", " + date.getFullYear().toString();
 }
 
-const gotoDayView = () => {
-  view.changeViewMode('day');
-  $('#previous').attr('data-tooltip', 'Previous Day');
-  $('#next').attr('data-tooltip', 'Next Day');
-  $('#tab-day').addClass('active');
-  $('#tab-week').removeClass('active');
-  $('#panel-week').hide();
-  $('#panel-day').show();
-  let monthYear = formatMonth(view.currentDay) + " " + view.currentDay.getFullYear().toString();
-  $('#month-year').html(monthYear);
-  document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Today";
-}
-
-const gotoWeekView = () => {
-  view.changeViewMode('week');
-  $('#previous').attr('data-tooltip', 'Previous Week');
-  $('#next').attr('data-tooltip', 'Next Week');
-  $('#tab-day').removeClass('active');
-  $('#tab-week').addClass('active');
-  $('#panel-day').hide();
-  $('#panel-week').show();
-  let monthYear = formatMonth(view.currentWeek) + " " + view.currentWeek.getFullYear().toString();
-  $('#month-year').html(monthYear);
-  document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Week";
-}
+// Check if input fields contain valid inputs.
+// If any one is invalid, report the specific input field is invalid. Return true if all input fields are valid, return false otherwise.
 
 const validateInputs = () => {                // call to validate form inputs
   let valid = true;
   let $inputs = $('#event-form :input');
-  let tempStartHour = null, tempStartMin = null;
+  let tempStartHour = null, tempStartMin = null;  // to compare end time later on
   $inputs.each(function() {
-    if (this.name === 'name') {
+    if (this.name === 'name') { // check if name field is valid
       if (2 <= $(this).val().length  && $(this).val().length <= 25) {
         $(this).removeClass('invalid')
       } else {
@@ -104,7 +80,7 @@ const validateInputs = () => {                // call to validate form inputs
         $(this).addClass('invalid')
       }
     }
-    if (this.name === 'description') {
+    if (this.name === 'description') {  // check if description field is valid
       if (2 <= $(this).val().length && $(this).val().length <= 350) {
         $(this).removeClass('invalid')
       } else {
@@ -112,7 +88,7 @@ const validateInputs = () => {                // call to validate form inputs
         $(this).addClass('invalid')
       }
     }
-    if (this.name === 'start-date') {
+    if (this.name === 'start-date') { // check if start date field is valid
       if ($(this).val().length >= 11) {
         $(this).removeClass('invalid')
       } else {
@@ -128,7 +104,7 @@ const validateInputs = () => {                // call to validate form inputs
         $(this).addClass('invalid')
       }
     }
-    if (this.name === 'start-time') {
+    if (this.name === 'start-time') { // check if start time field is valid
       if ($(this).val().length === 5) {
         tempStartHour = parseInt($(this).val().split(":")[0]);
         tempStartMin = parseInt($(this).val().split(":")[1]);
@@ -138,7 +114,7 @@ const validateInputs = () => {                // call to validate form inputs
         $(this).addClass('invalid')
       }
     }
-    if (this.name === 'end-time') {
+    if (this.name === 'end-time') { // check if end time field is valid
       let endHour = parseInt($(this).val().split(":")[0]);
       let endMin = parseInt($(this).val().split(":")[1]);
       let validEndTime = false;
@@ -161,6 +137,7 @@ const validateInputs = () => {                // call to validate form inputs
 /* ----------------------------------- */
 
 /* ------- API Request Actions ------- */
+// Default to http://127.0.0.1:5000 It serves as the communication channel between the Electron app and the Flask server.
 const BASE_URL = 'http://127.0.0.1:5000';
 const API_EVENTS = '/calendar/api/events';
 const ID_URL = '/calendar/api/events/id';
@@ -228,17 +205,19 @@ const createBackup = () => {  // creates a backup csv file
 /* ------------ Controllers ---------- */
 class ViewManager {
   constructor() {
-    this.currentDay = new Date();
-    this.currentWeek = new Date();
-    this.dayTables = {};
-    this.weekTables = {};
-    this.currentViewMode = "day";
-    this.events = [];
+    this.currentDay = new Date(); // date object for day view
+    this.currentWeek = new Date();  // date object for week view
+    this.currentViewMode = "day"; // tracking current view mode
+    this.events = []; // store events here
     this._init();
     this.createDayViewTable();
     this.createWeekViewTable();
   }
 
+// Calls getAllEvents()
+// To get all events in the database.
+// On success, re-render current view and update the table with events.
+// On failure, do not re-render.
   _init() {                         // it's probably fine to just get all the events with a small app, not ideal when scaled.
     getAllEvents()
     .then(data => {
@@ -258,17 +237,17 @@ class ViewManager {
     let table = document.getElementById('day-table'),
         thead = document.createElement('thead'),
         tbody = document.createElement('tbody');
-    for (let i = 0; i < 25; i++) {
-      if (i === 0) {
+    for (let i = 0; i < 25; i++) {  // iterate through the 24 time slots
+      if (i === 0) { // Create table head at top
         let weekDate = formataWeekday(this.currentDay) + " " + this.currentDay.getDate().toString();
         let th = document.createElement('th'),
             tr = document.createElement('tr');
-        th.innerHTML = weekDate;
+        th.innerHTML = weekDate;  // display current day of the week and day of the month
         tr.appendChild(th);
         thead.appendChild(tr);
         table.appendChild(thead);
       }
-      else {
+      else {  // create table body
         let tr = document.createElement('tr'),
             td = document.createElement('td');
         if (i < 10) { // sets up the IDs for prepopulating fields later
@@ -286,25 +265,25 @@ class ViewManager {
       }
     }
     table.appendChild(tbody);
-    $('#day-table').prop('value', monthDateYear);
+    $('#day-table').prop('value', monthDateYear); // give this table a date value
   }
 
   createWeekViewTable() {
     let monthYear = formatMonth(this.currentWeek) + " " + this.currentWeek.getFullYear().toString();
-    $('#month-year').html(monthYear);
-    let copiedDate = new Date(this.currentWeek);
-    for (let i = 0; i < 7; i++) {
+    $('#month-year').html(monthYear); // show current month and year at top left
+    let copiedDate = new Date(this.currentWeek); // don't want to manipulate on the object directly
+    for (let i = 0; i < 7; i++) { // iterate through each day table in week view
       let weekDate = formataWeekday(copiedDate) + " " + copiedDate.getDate().toString();
       let monthDateYear = formatMonth(copiedDate) + " " + copiedDate.getDate().toString() + ", " + copiedDate.getFullYear().toString();
       let table = document.getElementById('week-table-' + i.toString());
       let thead = document.createElement('thead');
       let tbody = document.createElement('tbody');
 
-      for (let j = 0; j < 25; j++) {
-        if (j === 0) {
+      for (let j = 0; j < 25; j++) { // iterate through the 24 time slots for this week day
+        if (j === 0) {  // create table header
           let th = document.createElement('th'),
               tr = document.createElement('tr');
-          th.innerHTML = weekDate;
+          th.innerHTML = weekDate;  // show week day and month day for this table
           tr.appendChild(th);
           thead.appendChild(tr);
           table.appendChild(thead);
@@ -321,19 +300,19 @@ class ViewManager {
           } else {
             var newId = (j - 1) + ':00';
           }
-          tr.id = newId;
+          tr.id = newId; // attach event id to this time slot
           tr.appendChild(td);
           tbody.appendChild(tr);
         }
       }
       table.appendChild(tbody);
       $('#week-table-' + i.toString()).prop('value', monthDateYear);
-      copiedDate.setDate(copiedDate.getDate() + 1);
+      copiedDate.setDate(copiedDate.getDate() + 1); // increment date
     }
   }
 
   renderDayViewEvents() {   // call this after the tables have been generated, this attaches events to the approriate table cells.
-    // clear table
+    // clear table first
     $('#day-table > tbody > tr').each(function() {
       $(this).removeClass('red pink purple deep-purple indigo blue lime lighten-4');
       $(this).removeClass('has-event');
@@ -517,7 +496,7 @@ class ViewManager {
       alert("Network error, couldn't establish connection to server. Try again");
     });
   }
-
+// Call deleteEvent() to delete the event with the given id from the database file. Then re-render current view.
   removeEvent(id) { // want to call the Request functions in the class to make use the class's methods
     deleteEvent(id)
     .then(data => {
@@ -539,8 +518,8 @@ class ViewManager {
   updateEvent(id, data) { // want to call the Request functions in the class to make use the class's methods
     updateEvent(id, data)
     .then(data => {
-      this.events.push(data);
-      this.renderDayViewEvents();
+      this.events.push(data); // push the new event to current state
+      this.renderDayViewEvents(); // re-render the views with updated events
       this.renderWeekViewEvents();
     })
     .catch(err => {
@@ -573,7 +552,7 @@ $(document).ready(function() {
   // Enable event menu to pop
   $('table>tbody>tr').click(
     function() {
-      remote.getGlobal('storage').needsPrompt = true;
+      remote.getGlobal('storage').needsPrompt = true; // warn user before closing app
       if ($(this).hasClass('has-event')) {  // if an event is in this cell, prepopulate the form with existing data.
         openedEventId = $(this).val();
         let eventData = view.findEventById($(this).val());
@@ -617,7 +596,7 @@ $(document).ready(function() {
         resetEventForm();
         $('#event-modal').modal('close');
       }
-      remote.getGlobal('storage').needsPrompt = false;
+      remote.getGlobal('storage').needsPrompt = false;  // disable warning
     }
   );
 
@@ -629,13 +608,13 @@ $(document).ready(function() {
         $inputs.each(function() {
           vals[this.name] = $(this).val();
         });
-        delete vals[''];
-        vals['id'] = openedEventId;
+        delete vals[''];    // there's a ghost input with a '' as its value
+        vals['id'] = openedEventId; // create an id for this event
         view.updateEvent(openedEventId, vals);
         resetEventForm();
         $('#event-modal').modal('close');
       }
-      remote.getGlobal('storage').needsPrompt = false;
+      remote.getGlobal('storage').needsPrompt = false;  // disable warning
     }
   );
 
@@ -643,7 +622,7 @@ $(document).ready(function() {
   $('#event-cancel').click(
     function() {
       resetEventForm();
-      remote.getGlobal('storage').needsPrompt = false;
+      remote.getGlobal('storage').needsPrompt = false;  // disable warning
     }
   );
 
@@ -655,7 +634,7 @@ $(document).ready(function() {
 
   $('#event-form').submit(
     function(e) {
-      e.preventDefault();
+      e.preventDefault(); // disable page refresh upon submission
       if (validateInputs()){
         let $inputs = $('#event-form :input');
         let vals = {};
@@ -698,14 +677,32 @@ $(document).ready(function() {
   // Hide current view, show day view.
   $('#tab-day').click(
     function() {
-      gotoDayView();
+      view.changeViewMode('day');
+      $('#previous').attr('data-tooltip', 'Previous Day');
+      $('#next').attr('data-tooltip', 'Next Day');
+      $('#tab-day').addClass('active');
+      $('#tab-week').removeClass('active');
+      $('#panel-week').hide();
+      $('#panel-day').show();
+      let monthYear = formatMonth(view.currentDay) + " " + view.currentDay.getFullYear().toString();
+      $('#month-year').html(monthYear);
+      document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Today";
     }
   );
 
   // Hide current view, show week view.
   $('#tab-week').click(
     function() {
-      gotoWeekView();
+      view.changeViewMode('week');
+      $('#previous').attr('data-tooltip', 'Previous Week');
+      $('#next').attr('data-tooltip', 'Next Week');
+      $('#tab-day').removeClass('active');
+      $('#tab-week').addClass('active');
+      $('#panel-day').hide();
+      $('#panel-week').show();
+      let monthYear = formatMonth(view.currentWeek) + " " + view.currentWeek.getFullYear().toString();
+      $('#month-year').html(monthYear);
+      document.getElementById("view-options-dropdown").childNodes[0].nodeValue = "Week";
     }
   );
 
