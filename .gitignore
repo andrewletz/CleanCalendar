@@ -3,6 +3,9 @@ venv/
 frontend/node_modules/
 .idea/
 frontend/CleanCalendar-win32-x64/
+server.spec
+backend/__pycache__/
+backend/server.spec
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
