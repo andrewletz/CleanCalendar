@@ -63,11 +63,6 @@ HTTP status 404 if no such event exists
 
 backup responds with json of the form  `{'status': status, 'message': message}` where status is 0 for no errors, 1 for invalid input (something wrong with the events list in the server), or 2 for file creation/writing error. The message is a string describing the error, or 'success' if no errors. The backup function calls a function from backup.py
 
-For using backup.py on its own:  
-`import backup` in a python file  
-call backup_csv(events) to create a csv file of all the events. Expects `events` to be a list of valid events.  
-Returns same status, message as above.
-
 The backup file:  
 * Name: `backup-<yyyy>-<mm>-<dd>.csv` where the date is the date of creation.  
 * The first line contains column headers. Each subsequent line contains the data for a single event.  
